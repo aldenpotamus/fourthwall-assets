@@ -1,0 +1,100 @@
+<style>
+    .sched_container {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        background: linear-gradient(to bottom,
+                /* Direction of the gradient */
+                #0f9300 0%,
+                /* First color stop */
+                #0f9300 25%,
+                /* Second color stop */
+                black 50%,
+                /* Third color stop */
+                black 75%
+                /* Fourth color stop */
+            );
+    }
+
+    table.sched {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th.sched,
+    td.sched {
+        text-align: center;
+        padding: 10px 15px;
+    }
+
+    th.sched_header {
+        width: calc(100% / 5);
+        /* Distribute 100% equally across 7 columns */
+        border-right: 1px solid white;
+        /* Add white vertical divider to right border */
+        font-size: 2vw;
+        background-color: #0f9300;
+    }
+
+    .sched_header {
+        display: table-cell;
+        height: 100%;
+    }
+
+    table.sched {
+        table-layout: fixed;
+        /* Ensures fixed column width */
+        width: 100%;
+        /* Set full width for table */
+    }
+
+    th:last-child,
+    td:last-child,
+    th.sched:last-child,
+    td.sched:last-child {
+        /* Remove right border on last column */
+        border-right: none;
+    }
+
+    th.sched,
+    td.sched {
+        width: calc(100% / 5);
+        /* Distribute 100% equally across 7 columns */
+        border-right: 1px solid rgb(184, 184, 184);
+        /* Add white vertical divider to right border */
+        background-color: black;
+    }
+</style>
+
+<div class="sched_container">
+    <table class="sched">
+        <tbody class="sched">
+            <th>
+                <tr class="sched">
+                    <th class="sched_header">Tuesday</th>
+                    <th class="sched_header">Wednesday</th>
+                    <th class="sched_header">Thursday</th>
+                    <th class="sched_header">Friday</th>
+                    <th class="sched_header">Sat / Sun / Mon</th>
+                </tr>
+            </th>
+            <tr class="sched">
+                <th class="sched"><img
+                        src="https://imgproxy.fourthwall.com/qbSCqtk6CzF9qAf7I80czqqqjN6hIghb_oyJrLxdPI4/w:1400/sm:1/aHR0cHM6Ly9zdG9y/YWdlLmdvb2dsZWFw/aXMuY29tL3BvcHNo/b3Bwcm9kLXNob3At/cmVuZGVyZXItYXNz/ZXRzLXE5Z2s3c2M2/L3RoZW1lcy9hc3Nl/dHMvYzc5ZTIzZDct/Mzc3My00MDMyLTgw/NjktMTkxMjY5MWYw/NTE4L2Fzc2V0cy9p/bWFnZS0xNzA4ODMy/NDk5LWltYWdlLWE1/OWZiZDkwNDY1NTU0/ODY5YThmNzRkZGRk/M2U4NWU1NGExZmU0/ODRkNmNjODRhOGZl/N2MyOTIwMWJjOTgx/ODkucG5n.webp">
+                </th>
+                <th class="sched"><a href="https://store.steampowered.com/app/1105670/The_Last_Spell/"><img
+                            src="https://lastspell.com/wp-content/uploads/2019/07/TLS_Logo_02_Red-500x316.png"></a></th>
+                <th class="sched"><a href="https://store.steampowered.com/app/1940340/Darkest_Dungeon_II/"><img
+                            src="https://img2.storyblok.com/fit-in/1536x1229/filters:format(png)/f/127947/427x231/ea387480c8/dd2-logo.png"></a>
+                </th>
+                <th class="sched"><a href="https://store.steampowered.com/app/1086940/Baldurs_Gate_3/"><img
+                            src="https://baldursgate3.game/png/logo-bg3.png"></a></th>
+                <th class="sched"><a href=""><img class="image-section__image"
+                            src="https://imgproxy.fourthwall.com/IVExjSArzc8aZHOFOlXd73z_HgF_LlgzKZkWdLkeKsQ/w:1400/sm:1/aHR0cHM6Ly9zdG9y/YWdlLmdvb2dsZWFw/aXMuY29tL3BvcHNo/b3Bwcm9kLXNob3At/cmVuZGVyZXItYXNz/ZXRzLXE5Z2s3c2M2/L3RoZW1lcy9hc3Nl/dHMvYzc5ZTIzZDct/Mzc3My00MDMyLTgw/NjktMTkxMjY5MWYw/NTE4L2Fzc2V0cy9p/bWFnZS0xNzA4ODMy/MDU3LWltYWdlLTA0/MGQwYzk1YzFiMDdk/NDZkNjZmZjNiN2Q4/ZTFiNWM3MDYwYjkx/ZDViYjdmMjRiNTZk/ZWFlMTNkNGU0ODEw/MjIucG5n.webp"
+                            alt="https://storage.googleapis.com/popshopprod-shop-renderer-assets-q9gk7sc6/themes/assets/c79e23d7-3773-4032-8069-1912691f0518/assets/image-1708832057-image-040d0c95c1b07d46d66ff3b7d8e1b5c7060b91d5bb7f24b56deae13d4e481022.png">
+                </th>
+            </tr>
+        </tbody>
+    </table>
+</div>

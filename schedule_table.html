@@ -1,0 +1,160 @@
+<style>
+    .sched_container {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        background: linear-gradient(to bottom,
+                /* Direction of the gradient */
+                #0f9300 0%,
+                /* First color stop */
+                #0f9300 25%,
+                /* Second color stop */
+                black 50%,
+                /* Third color stop */
+                black 75%
+                /* Fourth color stop */
+            );
+    }
+
+    table.sched {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th.sched,
+    td.sched {
+        text-align: center;
+        padding: 10px 15px;
+    }
+
+    th.sched_header {
+        width: calc(100% / 5);
+        /* Distribute 100% equally across 7 columns */
+        border-right: 1px solid white;
+        /* Add white vertical divider to right border */
+        /* font-size: 25px; */
+        background-color: #0f9300;
+    }
+
+    .sched_header {
+        display: table-cell;
+        height: 100%;
+    }
+
+    table.sched {
+        table-layout: fixed;
+        /* Ensures fixed column width */
+        width: 100%;
+        /* Set full width for table */
+    }
+
+    th:last-child,
+    td:last-child,
+    th.sched:last-child,
+    td.sched:last-child {
+        /* Remove right border on last column */
+        border-right: none;
+    }
+
+    th.sched,
+    td.sched {
+        width: calc(100% / 5);
+        /* Distribute 100% equally across 7 columns */
+        border-right: 1px solid rgb(184, 184, 184);
+        /* Add white vertical divider to right border */
+        background-color: black;
+    }
+
+    .s_container {
+    /* Define a container */
+    /* Use `inline-size` instead of `size` if you are only
+        interested in inline size, which is horizontal
+        for Latin and many other layouts. */
+    container-type: size;
+    
+    /* Other styles */
+    overflow: hidden;
+    }
+
+    .s_horizontal {
+    resize: horizontal;
+    }
+
+    .s_vertical {
+    resize: vertical;
+    }
+
+    .s_both {
+    resize: both;
+    }
+
+    .s_horizontal .s_child {
+    font-size: 3cqw;
+    }
+
+    .s_vertical .s_child {
+    font-size: 9cqh;
+    }
+
+    .s_both .s_child {
+    font-size: 9cqmin;
+    }
+</style>
+
+<div id="fw-section-rich-text-1708832645" class="fw-section" style="padding-top:50px;padding-bottom:25px">
+    <section data-section-id="fw-section-rich-text-1708832645" data-section-type="rich-text"
+        data-testid="main.single.section" class="rich-text rich-text--fw-section-rich-text-1708832645">
+        <div class="rich-text__inner">
+            <div class="container container--8 wrapper">
+
+                <div class="rich-text__header">
+                    <h2 class="rich-text__heading">
+                        Schedule
+                    </h2>
+                </div>
+
+
+                <div class="rich-text__text">
+                    <div class="html-formatter html-formatter--center">
+                        <p>This schedule is subject to change, for the latest schedule consult the <a
+                                href="https://discordapp.com/invite/9zy6C8vSEH">discord</a> events.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<div class="sched_container">
+    <table class="sched">
+        <tbody class="sched">
+            <th>
+                <tr class="sched s_container s_horizontal">
+                    <th class="sched_header s_child">Tuesday</th>
+                    <th class="sched_header s_child">Wednesday</th>
+                    <th class="sched_header s_child">Thursday</th>
+                    <th class="sched_header s_child">Friday</th>
+                    <th class="sched_header s_child">Sat/Sun/Mon</th>
+                </tr>
+            </th>
+            <tr class="sched">
+                <th class="sched"><img
+                        src="https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/schedule/variety.png">
+                </th>
+                <th class="sched"><a href="https://store.steampowered.com/app/1105670/The_Last_Spell/"><img
+                            src="https://lastspell.com/wp-content/uploads/2019/07/TLS_Logo_02_Red-500x316.png"></a></th>
+                <th class="sched"><a href="https://store.steampowered.com/app/1940340/Darkest_Dungeon_II/"><img
+                            src="https://img2.storyblok.com/fit-in/1536x1229/filters:format(png)/f/127947/427x231/ea387480c8/dd2-logo.png"></a>
+                </th>
+                <th class="sched"><a href="https://store.steampowered.com/app/1086940/Baldurs_Gate_3/"><img
+                            src="https://baldursgate3.game/png/logo-bg3.png"></a></th>
+                <th class="sched"><a href=""><img class="image-section__image"
+                            src="https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/schedule/vacation.png"
+                            alt="https://storage.googleapis.com/popshopprod-shop-renderer-assets-q9gk7sc6/themes/assets/c79e23d7-3773-4032-8069-1912691f0518/assets/image-1708832057-image-040d0c95c1b07d46d66ff3b7d8e1b5c7060b91d5bb7f24b56deae13d4e481022.png">
+                </th>
+            </tr>
+        </tbody>
+    </table>
+</div>

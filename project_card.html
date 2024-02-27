@@ -1,0 +1,187 @@
+<style>
+    /* General Card Styling */
+    .card {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 20px;
+        margin: 20px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+
+        background: black;
+    }
+
+    .card-header {
+        border-bottom: 1px solid #ddd;
+        margin-bottom: 15px;
+    }
+
+    .card-content {
+        display: flex; /* Arrange sections side by side*/
+        flex-direction: column;
+    }
+
+    @media (min-width: 700px) {
+        .card-content {
+            flex-direction: row;
+        }
+
+        .text-section {
+            width: 40%;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        .image-section {
+            width: unset;
+            max-width: 30%;
+        }
+
+        .video-section {
+            width: 100%;
+        }
+    }
+
+    /* Individual Sections */
+    .image-section {
+        position: relative; /* Make image section relative for positioning buttons */
+    }
+
+    .image-section img {
+        max-width: 100%; 
+        height: auto;
+    }
+
+    .text-section > ul {
+        margin-left: 2em;
+    }
+
+    .text-section > ul > li { 
+        list-style-type: disclosure-closed;
+    }
+
+    .text-section {
+        width: 100%;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .video-section {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+    }
+
+    .video-section-iframe-container {
+        width: 100%;
+        height: 0;
+        padding-bottom: 56.25%;
+        position: relative;
+    }
+
+    .video-section-iframe-container iframe {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+    
+    /* .thing {
+
+    } */
+
+    /* Accent Color */
+    .card-header h3 {
+        color: #0f9300;
+        font-size: 3em;
+        font-weight: bold;
+    }    
+    
+    .proj-video {
+        flex-grow: 1;
+    }
+
+    /* Carousel Styling */
+    .carousel {
+        overflow: hidden;
+    }
+
+    .carousel img:first-child {
+        display: block; /* Show the first image by default */
+    }
+
+    .next-button {
+        padding: 0; /* Remove default button padding */
+        border: none; /* Remove default button border */
+        background-color: transparent; /* No background color */
+        cursor: pointer;
+        position: absolute; 
+        top: 10px; 
+    }
+
+    .next-button {
+        right: 10px;
+        border-left: 20px solid white;  /* Thick left border */
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+    }
+
+</style>
+
+<body>
+    <div class="card">
+        <div class="card-header">
+            <h3>Modding: The Last Spell</h3>
+        </div>
+        <div class="card-content">
+            <div class="image-section">
+                <div class="carousel">
+                    <img src="https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/project_thumbs/tls_modding/tls-noxp-modimg.png" alt="Image 1">
+                    <img style="display: none" src="https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/project_thumbs/tls_modding/unlimited_power.png" alt="Image 2">
+                    <img style="display: none" src="https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/project_thumbs/tls_modding/random_perks.png" alt="Image 3">
+                    <img style="display: none" src="https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/project_thumbs/tls_modding/omen_of_many_weapons.png" alt="Image 3">
+                    <button class="next-button"></button>
+                </div>
+                <!-- <img src="https://imgproxy.fourthwall.com/jB3HB1DEYGSgxFQkAc_nKDdIOsICuLeYIr9yMogyev4/w:1400/sm:1/aHR0cHM6Ly9zdG9y/YWdlLmdvb2dsZWFw/aXMuY29tL3BvcHNo/b3Bwcm9kLXNob3At/cmVuZGVyZXItYXNz/ZXRzLXE5Z2s3c2M2/L3RoZW1lcy9hc3Nl/dHMvYzc5ZTIzZDct/Mzc3My00MDMyLTgw/NjktMTkxMjY5MWYw/NTE4L2Fzc2V0cy9p/bWFnZS0xNzA4OTg3/NzkxLWltYWdlLWIy/ZjY2ZWY2NjMwN2Ix/ZGRmMmEwOWY0N2Jl/ODllNTU5NjY4YTM2/ZjEyY2Y4ZWUzMDE3/MDJjYzFlYjAxZWI3/N2EucG5n.webp" alt="Card Image">  -->
+            </div>
+            <div class="text-section">
+                <p>Modding The Last Spell has become a bit of a community hobby, and has generated some pretty interesting challenges.
+                    <br>
+                    <br>
+                Here's a collection of mods created by the community:
+                <ul>
+                    <li><a href="https://www.nexusmods.com/thelastspell/mods/13">No XP Mod</a></li>
+                    <li><a href="https://www.nexusmods.com/thelastspell/mods/14">Omen of ONLY Weapons</a></li>
+                    <li><a href="https://www.nexusmods.com/thelastspell/mods/15">Randomised Perks</a></li>
+                    <li><a href="https://www.nexusmods.com/thelastspell/mods/16">Unlimited Power</a></li>
+                </ul>
+                </p>
+            </div>
+            <div class="video-section">
+                <div class="video-section-iframe-container">
+                    <iframe class="proj-video" src="https://www.youtube.com/embed/PAKrqLZtmNU?si=SVcQ4pDBN23Tdi0X" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>   
+    </div>
+    <script>
+        const carouselImages = document.querySelectorAll('.carousel img');
+        let currentImageIndex = 0;
+
+        const nextButton = document.querySelector('.next-button');
+
+        function showImage(newIndex) {
+        carouselImages[currentImageIndex].style.display = "none";
+        currentImageIndex = newIndex;
+        carouselImages[currentImageIndex].style.display = "block";
+        }
+
+        nextButton.addEventListener('click', () => {
+        showImage((currentImageIndex + 1) % carouselImages.length);
+        });
+
+        prevButton.addEventListener('click', () => {
+        const newIndex = (currentImageIndex - 1 + carouselImages.length) % carouselImages.length;
+        showImage(newIndex);
+        });
+    </script>
+</body>
+
