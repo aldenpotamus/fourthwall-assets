@@ -109,21 +109,27 @@
     }
 
     .next-button {
-        padding: 0; /* Remove default button padding */
-        border: none; /* Remove default button border */
-        background-color: transparent; /* No background color */
-        cursor: pointer;
-        position: absolute; 
+        background: transparent;
+        border: transparent;
+        width: 30px;
+        height: 30px;
+        position: absolute;
         top: 10px; 
-    }
-
-    .next-button {
         right: 10px;
-        border-left: 20px solid white;  /* Thick left border */
-        border-top: 10px solid transparent;
-        border-bottom: 10px solid transparent;
+        cursor: pointer;
+        content: ""; /* Remove default button content */
     }
 
+    .next-button::before {
+        content: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-5 -5 20 20'><polygon points='0,0 10,5 0,10' fill='white' stroke='%230f9300' stroke-width='2' /></svg>");
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%; 
+    }
+
+    .thing {color: #1aff00}
 </style>
 
 <body>
@@ -145,7 +151,7 @@
                 <!-- <img src="https://imgproxy.fourthwall.com/jB3HB1DEYGSgxFQkAc_nKDdIOsICuLeYIr9yMogyev4/w:1400/sm:1/aHR0cHM6Ly9zdG9y/YWdlLmdvb2dsZWFw/aXMuY29tL3BvcHNo/b3Bwcm9kLXNob3At/cmVuZGVyZXItYXNz/ZXRzLXE5Z2s3c2M2/L3RoZW1lcy9hc3Nl/dHMvYzc5ZTIzZDct/Mzc3My00MDMyLTgw/NjktMTkxMjY5MWYw/NTE4L2Fzc2V0cy9p/bWFnZS0xNzA4OTg3/NzkxLWltYWdlLWIy/ZjY2ZWY2NjMwN2Ix/ZGRmMmEwOWY0N2Jl/ODllNTU5NjY4YTM2/ZjEyY2Y4ZWUzMDE3/MDJjYzFlYjAxZWI3/N2EucG5n.webp" alt="Card Image">  -->
             </div>
             <div class="text-section">
-                <p>This <a href="">spreadsheet</a> and the accompanying videos are designed to help demystify the nature of damage calculations in The Last Spell.  The nature of the game doesn't always allow you as a player the agency to "What-if" builds to determine where you might have went wrong.  This means that it's easy as a player to attribute success to bad decisions or completely miss out on potential imrpovement when things "are good enough".
+                <p>This <a href="https://docs.google.com/spreadsheets/d/10R3IkuBewd6WvMfdDMVdg7ammTXiUxS380fCc-PkPtQ/edit?usp=sharing">spreadsheet</a> and the accompanying videos are designed to help demystify the nature of damage calculations in The Last Spell.  The nature of the game doesn't always allow you as a player the agency to "What-if" builds to determine where you might have went wrong.  This means that it's easy as a player to attribute success to bad decisions or completely miss out on potential imrpovement when things "are good enough".
                     <br><br>
                     The sheet provides you as the player the ability to rewind time and try multiple paths, or simply enter your hero data and let the sheet guide you to greatness.
                 </p>
@@ -194,24 +200,27 @@
         </div>   
     </div>
     <script>
-        const carouselImages = document.querySelectorAll('.carousel img');
-        let currentImageIndex = 0;
+        // Get all carousel sections
+        const carouselSections = document.querySelectorAll('.image-section');
 
-        const nextButton = document.querySelector('.next-button');
+        // Loop through each carousel section
+        carouselSections.forEach(carouselSection => {
+            const carouselImages = carouselSection.querySelectorAll('.carousel img');
+            let currentImageIndex = 0;
 
-        function showImage(newIndex) {
-        carouselImages[currentImageIndex].style.display = "none";
-        currentImageIndex = newIndex;
-        carouselImages[currentImageIndex].style.display = "block";
-        }
+            // Select specific nextButton within this carousel section
+            const nextButton = carouselSection.querySelector('.next-button');
+            const prevButton = carouselSection.querySelector('.prev-button');
 
-        nextButton.addEventListener('click', () => {
-        showImage((currentImageIndex + 1) % carouselImages.length);
-        });
+            function showImage(newIndex) {
+                carouselImages[currentImageIndex].style.display = "none";
+                currentImageIndex = newIndex;
+                carouselImages[currentImageIndex].style.display = "block";
+            }
 
-        prevButton.addEventListener('click', () => {
-        const newIndex = (currentImageIndex - 1 + carouselImages.length) % carouselImages.length;
-        showImage(newIndex);
+            nextButton.addEventListener('click', () => {
+                showImage((currentImageIndex + 1) % carouselImages.length);
+            });
         });
     </script>
 </body>
