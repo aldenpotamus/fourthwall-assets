@@ -1,0 +1,39 @@
+<style>
+.caution {
+  width: 100%;
+  height: 60px; /* Adjusted height */
+  background: repeating-linear-gradient(
+    45deg, 
+    yellow, 
+    yellow 20px, /* Width of yellow stripe */
+    black 20px,  /* Width of black stripe */
+    black 40px   /* Total width of one stripe cycle */
+    ); 
+}
+
+.titlebox {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      display: flex; /* Center content horizontally */
+      justify-content: center; /* Align content horizontally */
+      align-items: center; /* Align content vertically */
+    }
+
+.coming_soon {
+    text-align: center; /* Center text horizontally */
+    font-size: 10vw; /* Use viewport width for dynamic sizing */
+    margin: 0;
+    white-space: nowrap; /* Prevent text wrapping */
+}
+</style>
+
+<body>
+  <div style="margin-top: 50px">
+    <div class="caution"></div>
+    <div class="titlebox">
+        <h1 class="coming_soon">COMING SOON</h1>
+    </div>
+    <div class="caution"></div>
+    </div>
+</body>

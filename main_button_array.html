@@ -1,0 +1,119 @@
+<style>
+    button > h2 {
+        font-weight: bold;
+    }
+
+    .main-div {
+        height: 100%;
+        display: flex;
+        align-content: stretch;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        flex-direction: row;
+        width: 100%;
+    }
+
+    .main-button-container {
+        display: flex;
+        flex-direction: column;
+        gap: 25px; /* Adjust gap between buttons as needed */
+        gap: 10px;
+        justify-content: stretch;
+        padding-bottom: 35px;
+    }
+
+    @media (min-width: 1000px) {
+        .title-holder {
+        justify-content: center;
+        }
+
+        .main-button-container {
+            flex-direction: row !important;
+        }
+
+        .custom-button {
+            width: unset !important;
+        }
+
+        .main-button-container > a {
+            width: unset !important;
+        }
+    }
+
+    .main-button-container > a {
+        width: 100%;
+    }
+
+    .custom-button {
+        background-color: #0f9300;
+        color: white;
+        border: none;
+        padding: 10px 20px; /* Adjust padding as needed */
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        width: 100%;
+    }
+
+    .custom-button:hover {
+        background-color: #0d8000; /* Adjust hover color as needed */
+    }
+
+    .material-icons {
+        font-family: 'Material Icons'; /* Include Material Icons library */
+        font-weight: normal;
+        font-style: normal;
+        font-size: 24px; /* Adjust icon size as needed */
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        vertical-align: middle;
+    }
+
+    .title-holder {
+        height: 600px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .title-holder > h1 {
+        padding-top: 1vh;
+        font-size: 6vw;
+        text-shadow: 0px 0 6px #00ff00;
+    } 
+</style>
+
+<div class="title-holder">
+    <h1>HOME OF THE POTAMUS PEOPLE</h1>
+    <div class="main-div">
+    <div class="main-button-container">
+        <a href="https://www.youtube.com/@aldenpotamus">
+            <button class="custom-button">
+                <h2>ALDENPOTAMUS</h2>
+            </button>
+        </a>
+        <a href="pages/schedule">
+            <button class="custom-button">
+                <h2>SCHEDULE</h2>
+            </button>
+        </a>
+        <a href="pages/projects">
+            <button class="custom-button">
+                <h2>PROJECTS</h2>
+            </button>
+        </a>
+        <a href="pages/videos">
+            <button class="custom-button">
+                <h2>VIDEOS</h2>
+            </button>
+        </a>
+        <a href="collections/all">
+            <button class="custom-button">
+                <h2>SHOP</h2>
+            </button>
+        </a>
+    </div>
+    </div>
+</div>

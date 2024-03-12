@@ -1,0 +1,31 @@
+<style>
+    .container {
+    width: 200px; /* Adjust square size */
+    height: 200px; /* Adjust square size */
+    position: relative; /* Enable child element positioning */
+    overflow: hidden; /* Clip overflowing content */
+    }
+
+    .circle {
+    width: 50px; /* Adjust circle size */
+    height: 50px; /* Adjust circle size */
+    border-radius: 50%; /* Create perfect circle */
+    background-color: #f00; /* Circle color */
+    position: absolute; /* Allow animation positioning */
+    animation: move 5s linear infinite; /* Animation properties */
+    }
+
+    /* Corrected animation definition */
+    @keyframes move {
+    from { /* Use 'from' instead of 0% */
+        transform: translateX(0px); /* Start from left */
+    }
+    to { /* Use 'to' instead of 100% */
+        transform: translateX(calc(100% - 50px)); /* Move to right edge */
+    }
+    }
+</style>
+
+<div class="container">
+    <span class="circle"></span>
+</div>
