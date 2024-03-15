@@ -1,0 +1,204 @@
+<style>
+    .about-sections {
+        display:flex;
+        flex-direction: column;
+        max-width: 1200px;
+        /* gap: 60px; */
+    }
+
+    .about-section {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .about-section.alternate {
+        display: flex;
+        flex-direction: row-reverse;
+    }
+
+    .about-image {
+        width: 0px;
+    }
+
+    .about-image > img {
+        visibility: hidden;
+        height: auto;
+        max-height: 0px;
+        width: auto;
+        object-fit: cover;
+        
+    }
+
+    .about-image.shadow > img {
+        border-radius: 25px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .about-text {
+
+    }
+
+    .about-section.alternate > .about-text > h1 {
+        text-align: right;
+    }
+
+    .about-text > h1 {
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-top: 20px;
+        margin-bottom: 0px;
+        /* font-size: 3rem; */
+    }
+
+    .about-body {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: flex-start;
+    }
+
+    .about-body > p {
+        font-size: 1.1rem;
+    }
+
+    .about-section.alternate .about-body > p {
+        text-align: right;
+    }
+
+    .line {
+        align-self: stretch;
+        width: 7px;
+        max-width: 7px;
+        min-width: 7px;
+        margin: 20px;
+        background-color: #0f9300; /* Adjust color as desired */
+        transform: translateX(-50%);
+    }
+
+    .about-section.alternate .line.before {
+        visibility: hidden;
+    }
+    
+    .about-section.alternate .line.after {
+        visibility: visible;
+    }
+
+    .about-section .line.before {
+        visibility: visible;
+    }
+    
+    .about-section .line.after {
+        visibility: hidden;
+    }
+
+    @media only screen and (min-width: 850px) {
+        .about-image img {
+            visibility: visible;
+            max-height: 350px;
+        }
+
+        .about-image {
+            width: auto;
+            max-height: 350px;
+            /* width: 40%; */
+            /* flex: 0 0 40%; */
+            padding: 20px 20px 20px 20px;
+        }
+
+        .container {
+            justify-content: space-between;
+        }
+    }
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+<div class="about-sections">
+    <div class="about-section">
+        <div class="about-image">
+            <img src="https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/about_us/community.png" alt="Community Image">
+        </div>
+        <div class="about-text">
+            <h1>Who are The Potamus People?</h1>
+            <div class="about-body">
+                <div class="line before"></div>
+                <p>
+                    They are an extremely exclusive group of only the highest caliber roguelike gamers- that and basically anyone who clicks <a href="https://discord.gg/9zy6C8vSEH" >this link</a>.  How I ever managed to join is beyond me, the standards have really slipped.  What unites the community is a passion for games... difficult games that you learn by playing, and more importantly learn by getting your ass kicked by.  We love losing, and believe that each time we do, we’re getting a little closer to maybe not losing next time, and when we do eventually overcome our significant aversion to reading and abysmal math skills, it makes those victories all the more satisfying because they were earned.
+                    <br><br>
+                    Other than that, when we’re not getting crushed by our favorite over tuned new deck builder, we’re just being cool... not cool in the leather jacket and sunglasses sort of way, more so in the being kind and inclusive to everyone way.  There’s plenty of internet places steeped in hate, and this definitely isn’t one, so if I tricked you into clicking the link above and you suck, please un-click it.
+                    <div class="line after"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="about-section alternate">
+        <div class="about-image shadow">
+            <img src="https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/about_us/aldenpotamus.jpg" alt="Aldenpotamus Image">
+        </div>
+        <div class="about-text">
+            <h1>Who is Aldenpotamus?</h1>
+            <div class="about-body">
+                <div class="line before"></div>
+                <p>
+                    I’m Alden of the Potamus persuasion… the internet hobo at the helm of this band of <a href="pages/team">misfit gamers</a>. A career spreadsheet engineer / computer programmer who left that life behind in 2020 to do something meaningful with my life, and apparently that was to make videos of myself playing video games on the internet. No accounting, right?
+                    <br><br>
+                    In the “before times” when I would get home from a long day of work, I’d be too tired to play the games I’d spent the day wishing I was playing. Instead, I’d fire up YouTube or Twitch and watch someone else play my beloved games while I powered down my work-addled brain and kicked my feet up. I knew I wasn’t alone because so many people were watching them too. The common denominator with all the people I watched was that I always knew better, and I bought 100’s of games just to prove to myself that my base was more organized or my strategies superior.
+                    <br><br>
+                    With a few years of streaming under my belt, I can say with certainty that my strategies weren’t better, my bases are usually hot garbage, and streaming makes everything just that little bit harder… but I also enjoy the hell out of it and love sharing the games that I love.</p>
+                <div class="line after"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="about-section">
+        <div class="about-image shadow" style="max-height: 300px !important;">
+            <img src="https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/about_us/mission_statement.jpg" alt="Mission Image" style="max-height: 300px !important;">
+        </div>
+        <div class="about-text">
+            <h1>What is our mission?</h1>
+            <div class="about-body">
+                <div class="line before"></div>
+                <p>
+                    Streaming and playing video games is a young person’s game, and as an old man, I lack the desire and constitution to beat them at said game.  They’re entirely too animated and excitable… and I can't be bothered.  Our goal here is to create content for a more subdued audience, the kind of audience that enjoys afternoon jello and the occasional sponge bath.  Or perhaps more likely, the type of people who don’t always have the time or energy to play the games they love (new or old), but enjoy watching someone thoughtful and sometimes articulate wax philosophic about a shared love.
+                    <br><br>
+                    Beyond that, our mission is to educate, to bring the community along and learn and improve together.  Games that are strategically deep can sometimes feel unapproachable, and it can feel overwhelming to try to crack the code, so when I can, I try to distill down our communities' learning into videos that will help people overcome the daunting task of tackling a new game and find the reward in mastering it.
+                <div class="line after"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="about-section alternate">
+        <div class="about-image" style="max-height: 165px !important;">
+            <img src="https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/about_us/where.png" alt="Where Image" style="max-height: 165px !important;">
+        </div>
+        <div class="about-text">
+            <h1>Where can I find all this stuff?</h1>
+            <div class="about-body">
+                <div class="line before"></div>
+                <p>
+                    We’re live on <a href="https://www.twitch.tv/aldenpotamus"><i class="fab fa-twitch"></i> Twitch</a> and <a href="https://www.youtube.com/@aldenpotamus"><i class="fab fa-youtube"></i> YouTube</a> Tuesday - Friday 9am to 2pm PST most weeks.
+                    <br><br>
+                    All our gameplay is divided into snackable chunks that find their way onto my YouTube channel in the form of daily uploads.  If you’re looking for more of anything, there’s more, as of writing this, there are 4,000 videos and nearly 650 livestreams all available completely free of charge.
+                <div class="line after"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="about-section">
+        <div class="about-image shadow">
+            <img src="https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/about_us/merch.png" alt="Merch Image">
+        </div>
+        <div class="about-text">
+            <h1>How can I support this ragtag bunch?</h1>
+            <div class="about-body">
+                <div class="line before"></div>
+                <p>
+                    This is an evolving question, and I’ll try to keep this up to date, but the fact that you’re asking means the world to me, so thank you kind strawman.  The answer is that a <a href="https://www.youtube.com/@aldenpotamus/join">YouTube Membership</a> or <a href="https://subs.twitch.tv/aldenpotamus">Twitch Subscription</a> are both amazing recurring ways to support what I do and allow me to invest more in the channel and better content.  If something tangible is more your style, we now have <a href="collections/all">merch</a> in the form of some comfy clothes, inside joke mugs and patches.
+                    <br><br>
+                    My pledge is that this isn’t an endeavor about making money, it’s always been about making the content I would want to watch and as such, the proceeds are always reinvested into improving what we put out.  That may be gear or eventually even editors and admins to help with the day to day.  I have long held that the path to success is making better content, and support from the community is a crucial part of making that happen.
+                <div class="line after"></div>
+            </div>
+        </div>
+    </div>
+</div>
