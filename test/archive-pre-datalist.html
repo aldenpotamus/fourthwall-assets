@@ -1,0 +1,362 @@
+<!--
+https://codepen.io/alvarotrigo/pen/MWVPLLZ
+https://air-datepicker.com/docs
+https://codepen.io/ankithingarajiya/pen/jjOxMo
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/css/datepicker.css">
+
+  <title>Searchable JSON Table</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 1000px;
+    }
+
+    input {
+        padding: 10px;
+        background-color: #fff;
+        border-radius: 2px;
+        box-shadow: 0 0 2px rgb(204, 204, 204);
+        width: -webkit-fill-available;
+        position: relative;
+        font-size: 14px;
+        color: #474747;
+        height: 100%;
+        text-align: left;
+        border: unset;
+    }
+
+    th, td {
+      width: 1%;
+      padding: 0px;
+      border: 2px solid #000;
+    }
+
+    td {
+        padding: 8px;
+    }
+
+    tr td:last-child {
+        width: 1%;
+        white-space: nowrap;
+    }
+
+    table button {
+        width: -webkit-fill-available;
+        margin-top: 10px;
+    }
+
+    /* Loader */
+    .lds-roller { /* change color here */ color: #1c4c5b } .lds-roller, .lds-roller div, .lds-roller div:after { box-sizing: border-box; } .lds-roller { display: inline-block; position: relative; width: 80px; height: 80px; } .lds-roller div { animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite; transform-origin: 40px 40px; } .lds-roller div:after { content: " "; display: block; position: absolute; width: 7.2px; height: 7.2px; border-radius: 50%; background: currentColor; margin: -3.6px 0 0 -3.6px; } .lds-roller div:nth-child(1) { animation-delay: -0.036s; } .lds-roller div:nth-child(1):after { top: 62.62742px; left: 62.62742px; } .lds-roller div:nth-child(2) { animation-delay: -0.072s; } .lds-roller div:nth-child(2):after { top: 67.71281px; left: 56px; } .lds-roller div:nth-child(3) { animation-delay: -0.108s; } .lds-roller div:nth-child(3):after { top: 70.90963px; left: 48.28221px; } .lds-roller div:nth-child(4) { animation-delay: -0.144s; } .lds-roller div:nth-child(4):after { top: 72px; left: 40px; } .lds-roller div:nth-child(5) { animation-delay: -0.18s; } .lds-roller div:nth-child(5):after { top: 70.90963px; left: 31.71779px; } .lds-roller div:nth-child(6) { animation-delay: -0.216s; } .lds-roller div:nth-child(6):after { top: 67.71281px; left: 24px; } .lds-roller div:nth-child(7) { animation-delay: -0.252s; } .lds-roller div:nth-child(7):after { top: 62.62742px; left: 17.37258px; } .lds-roller div:nth-child(8) { animation-delay: -0.288s; } .lds-roller div:nth-child(8):after { top: 56px; left: 12.28719px; } @keyframes lds-roller { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    /* Dropdown */
+    .container { width: 500px; margin: 50px auto 0; text-align: center } /*Styling Selectbox*/ .dropdown { width: 300px; display: inline-block; background-color: #fff; border-radius: 2px; box-shadow: 0 0 2px rgb(204, 204, 204); transition: all .5s ease; position: relative; font-size: 14px; color: #474747; height: 100%; text-align: left } .dropdown .select { cursor: pointer; display: block; padding: 10px } .dropdown .select > i { font-size: 13px; color: #888; cursor: pointer; transition: all .3s ease-in-out; float: right; line-height: 20px } .dropdown:hover { box-shadow: 0 0 4px rgb(204, 204, 204) } .dropdown:active { background-color: #f8f8f8 } .dropdown.active:hover, .dropdown.active { box-shadow: 0 0 4px rgb(204, 204, 204); border-radius: 2px 2px 0 0; background-color: #f8f8f8 } .dropdown.active .select > i { transform: rotate(-90deg) } .dropdown .dropdown-menu { position: absolute; background-color: #fff; width: 100%; left: 0; margin-top: 1px; box-shadow: 0 1px 2px rgb(204, 204, 204); border-radius: 0 1px 2px 2px; overflow: hidden; display: none; max-height: 600px; overflow-y: auto; z-index: 9 } .dropdown .dropdown-menu li { padding: 10px; transition: all .2s ease-in-out; cursor: pointer } .dropdown .dropdown-menu { padding: 0; list-style: none } .dropdown .dropdown-menu li:hover { background-color: #f2f2f2 } .dropdown .dropdown-menu li:active { background-color: #e2e2e2 }
+  </style>
+</head>
+<body>
+  <h1>Episode Index</h1>
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th><div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div>Loading...</div></th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/js/datepicker.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/js/i18n/datepicker.en.min.js"></script>
+
+  <script>
+    const table = document.getElementById('dataTable');
+    var jsonData; // Declare jsonData without an initial value
+
+    var GAMES = {};
+    var GamesDropdown = null;
+    var CURRENT_GAME = "";
+
+    var TIME_FILTER = "";
+
+    var FILTERS = ['Date', 'Time', 'Game', 'Episode Name', 'Ep #', 'Link'];
+
+    var minDate = new Date(appendTimezone("2020-11-25"));
+    var maxDate = new Date(appendTimezone("2050-01-01"));
+
+    fetch("https://script.google.com/macros/s/AKfycbxI0f7oxgfEz4VQ4J8elBRSo8Y2duId-aMRMWAFqpTdDbBF0oAdKGI3MtQg0fNHimU/exec", { method: "GET" })
+        .then(response => response.json())
+        .then(data => {
+            jsonData = { 'data': data };
+            if (table) {
+                partCounter = {}
+                jsonData.data.reverse().forEach(row => {
+                    var key = row["Game"]+row["Ep #"];
+                    if(!GAMES.hasOwnProperty(row["Game"])) { GAMES[row["Game"]] = 1; } else { GAMES[row["Game"]]++ }
+
+                    row["Episode Name"] = row["Episode Name"].replace(/(^["]|["]$)/g, '')
+
+                    if(key in partCounter) {
+                        partCounter[key]++;
+                    } else {
+                        partCounter[key] = 1;
+                    }
+                    row["Ep #"] += "-"+partCounter[key];
+
+                    row["Link"] = "https://youtu.be/"+row["Link"];
+
+                    var dateAndTime = Date.parse(row["Date"]+" "+row["Time"]);
+                    row["Date"] = new Date(dateAndTime);
+                    row["Time"] = new Date(dateAndTime);
+                });
+
+                jsonData.data.reverse();
+                
+                const sortable = Object.entries(GAMES)
+                    .sort(([,a],[,b]) => b-a)
+                    .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
+                
+                GamesDropdown = ["ALL"].concat(Object.keys(sortable).filter(i => i != ''));
+
+                generateTable(jsonData.data); // Create table initially
+                addTableSearch();
+
+                var today = new Date().toLocaleDateString('fr-CA');
+                filterTable(jsonData.data, filter={'Date': today});
+            } else {
+                console.error("Table element not found.");
+            }
+        })
+        .catch(error => console.error(error));
+
+    function generateTable(data) {
+        // Create the table element
+        const table = document.getElementById('dataTable');
+        table.innerHTML = '';
+
+        // Check if data is an array
+        if (!Array.isArray(data)) {
+            throw new Error('Input data must be an array of objects');
+        }
+
+        // Get the first object to determine table headers
+        const headers = Object.keys(data[0]);
+
+        // Create table head row
+        const thead = document.createElement('thead');
+        const headerRow = thead.insertRow();
+        headers.forEach(header => {
+            const th = document.createElement('th');
+            const div = document.createElement('div');
+            const text = document.createTextNode(header);
+            div.appendChild(text);
+            th.appendChild(div);
+            headerRow.appendChild(th);
+            th.id = header.replace(" ", "_")+"_header"
+            th.class = "header";
+        });
+        table.appendChild(thead);
+    }
+
+    var ROW_LIMIT = 250;
+    var CURRENT_ROW_LIMIT = ROW_LIMIT;
+    function filterTable(data) {
+        var rows = 0;
+        // Create table body
+        const table = document.getElementById('dataTable');
+        [...table.querySelectorAll('tbody')].forEach(child => {
+            table.removeChild(child);
+        });
+
+        const tbody = document.createElement('tbody');
+        const headers = Object.keys(data[0]);
+
+        data.filter(row => {
+            var result = [];
+
+            FILTERS.forEach(key => {
+                if(key == "Date"){
+                    result.push(row[key] >= minDate && row[key] <= maxDate);
+                } else if (key == "Game") {
+                    result.push(CURRENT_GAME == 'ALL' ? true : row[key] == CURRENT_GAME);
+                } else if (key == "Time") {
+                    result.push(row[key].toLocaleTimeString(navigator.language, {
+                        hour: '2-digit',
+                        minute:'2-digit'
+                    }).replace(/^0/, "").includes(TIME_FILTER));
+                }
+            });
+
+            return result.every(bool => bool);
+        }).sort(function(a,b){
+            return b.date - a.date;
+        }).forEach(row => {
+            if(rows++ < CURRENT_ROW_LIMIT) {
+                const tableRow = tbody.insertRow();
+                headers.forEach(header => {
+                    var td = document.createElement('td');
+                    var text = document.createTextNode(row[header]);
+                    
+                    if(header == "Link") {
+                        var a = document.createElement('a');
+                        a.title = "YouTube";
+                        a.href = row[header];
+                        a.appendChild(text);
+                        text = a;
+                    } else if (header == "Date") {
+                        text = row[header]
+                            .toLocaleDateString("fr-CA");
+                    } else if (header == "Time") {
+                        text = row[header]
+                            .toLocaleTimeString(navigator.language, {
+                                hour: '2-digit',
+                                minute:'2-digit'
+                            }).replace(/^0/, "");
+                    } else {
+                        text = row[header].toString();
+                    }
+                    
+                    td.textContent = text;
+                    tableRow.appendChild(td);
+                });
+            }
+        });
+
+        if(rows > ROW_LIMIT) {
+            var tr = document.createElement('tr');
+            var td = document.createElement('td');
+            td.style = "border: None";
+            
+            const moreButton = document.createElement('button');
+            moreButton.innerText = "MORE!";
+            moreButton.addEventListener('click', () => {
+                CURRENT_ROW_LIMIT += ROW_LIMIT;
+                filterTable(data)
+            });
+            tr.appendChild(td);
+            td.appendChild(moreButton);
+            td.colSpan = 6;
+            tbody.appendChild(tr)
+        }
+
+        table.appendChild(tbody);
+
+        return table;
+    }
+
+    function addTableSearch(keys) {
+        [...document.querySelectorAll("th")].forEach((columnHeader) => {
+            var input = document.createElement("input")
+            input.type = "hidden";
+            input.id = columnHeader.textContent;
+            columnHeader.appendChild(input);
+        });
+       
+        /* Dates */
+        var dateEnd = document.createElement('input');
+        dateEnd.type = "hidden";
+        dateEnd.id = "Date-End";
+        
+        var dateBox = document.createElement('input');
+        dateBox.id = "dateBox";
+
+        $('#Date').after(dateBox);
+        $('#dateBox').datepicker({
+            language: 'en',
+            range : true,
+            minDate : new Date(appendTimezone("2020-11-25")),
+            multipleDates: true,
+            multipleDatesSeparator: " to ",
+            dateFormat: "yyyy-mm-dd",
+            onSelect: (date) => {
+                var dates = date.split(" to ");
+                minDate = new Date(appendTimezone(dates[0]));
+                minDate = isNaN(minDate) ? new Date(appendTimezone("2020-11-25")) : minDate;
+                minDate.setHours(0);
+                minDate.setMinutes(0);
+                minDate.setSeconds(0);
+                minDate.setMilliseconds(0);
+                
+                maxDate = dates[1] ? new Date(appendTimezone(dates[1])) : new Date(appendTimezone(dates[0]));
+                maxDate = isNaN(maxDate) ? new Date(appendTimezone("2050-01-01")) : maxDate;
+                maxDate.setHours(23);
+                maxDate.setMinutes(59);
+                maxDate.setSeconds(59);
+                maxDate.setMilliseconds(0);
+
+                $('#Game').trigger("change");
+            }
+        });
+
+        $('#Date').after(dateEnd);
+
+        /* Games */
+        var dropdownDiv = document.createElement('div');
+        dropdownDiv.classList.add("dropdown");
+        
+        var selectDiv = document.createElement('div');
+        selectDiv.classList.add("select");
+        selectDiv.innerHTML = '<span>Game</span><i class="fa fa-chevron-left"></i>';
+        dropdownDiv.appendChild(selectDiv);
+        
+        var dropdownHiddenInput = $("#Game")[0];
+        $("#Game").after(dropdownDiv);
+        $("#Game").parent().remove($("#Game"));
+        selectDiv.after(dropdownHiddenInput);
+      
+        var ul = document.createElement('ul');
+        ul.classList.add("dropdown-menu");
+        GamesDropdown.forEach(game => {
+            var li = document.createElement('li');
+            li.id = game;
+            li.innerText = game;
+            ul.appendChild(li);
+        });
+
+        dropdownDiv.appendChild(ul);
+
+        $('.dropdown').click(function () {
+            $(this).attr('tabindex', 1).focus();
+            $(this).toggleClass('active');
+            $(this).find('.dropdown-menu').slideToggle(300);
+        });
+        $('.dropdown').focusout(function () {
+            $(this).removeClass('active');
+            $(this).find('.dropdown-menu').slideUp(300);
+        });
+        $('.dropdown .dropdown-menu li').click(function () {
+            $(this).parents('.dropdown').find('span').text($(this).text());
+            $(this).parents('.dropdown').find('input').attr('value', $(this).attr('id'));
+            $('#Game').trigger("change");
+        }); 
+
+        $('#Game').on('change', function() {
+            CURRENT_GAME = $('#Game')[0].value;
+            filterTable(jsonData.data);
+        });
+
+        /* Time */
+        var timeInput = document.createElement('input');
+        timeInput.classList.add('select');
+        $("#Time")[0].after(timeInput);
+        timeInput.addEventListener("change", (event) => {
+            TIME_FILTER = event.target.value;
+            filterTable(jsonData.data);
+        })
+    }
+
+    function appendTimezone(dateString) {
+        return dateString+" "+new Date().toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2];
+    }
+  </script>
+</body>
+</html>
