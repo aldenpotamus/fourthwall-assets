@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Last Spell Haven Builds</title>
+  <style>
+    /* Container for the carousel */
+    .carousel {
+        position: relative;
+        --r: 1252/1100;
+        width: 90%;
+        aspect-ratio: var(--r);
+    }
+    
+    /* Each image is a slide */
+    .carousel img {
+        position: absolute; 
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        opacity: 0;
+        transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; 
+        transform: rotate3d(1, 0, 0, 0deg) rotate(0deg) scale(1);
+    }
+
+    .carousel.grid img {
+        position: absolute; 
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        opacity: 0;
+    }
+
+    .carousel.grid.threed img {
+        transform: rotate3d(1, 0, 0, 45deg) rotate(45deg) scale(1);
+    }
+
+    .carousel img.active {
+        opacity: 1;
+        mix-blend-mode: normal;
+    }
+
+    .carousel img.grid {
+        transform: rotate3d(1, 0, 0, 45deg) rotate(45deg) scale(1);
+    }
+
+    .bottom-bar {
+     position: absolute;
+      bottom: 10px;
+      display: flex;
+      justify-content: center;
+      width: 100%;       
+    }
+
+    .bottom-bar input {
+        right: 0px;
+        position: absolute;
+        bottom: 4px;
+    }
+
+    .bottom-bar span#map-text {
+        font-size: 2em;
+        font-weight: bolder;
+        left: 0px;
+        position: absolute;
+        bottom: 4px;
+    }
+    
+    /* Navigation dots container */
+    .carousel-dots {
+      position: absolute;
+      bottom: 10px;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+    
+    /* Navigation dot */
+    .carousel-dot {
+      width: 10px;
+      height: 10px;
+      margin: 0 5px;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+    }
+    
+    /* Style the active dot */
+    .carousel-dot.active {
+      background-color: rgb(191, 191, 191);
+    }
+
+    /* Navigation buttons */
+    .carousel-nav {
+      /* position: absolute; */
+      bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      z-index: 2;  /* Added line */
+    }
+    
+    .carousel-nav button {
+      position: relative;
+      padding: 5px 10px;
+      border: none;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      cursor: pointer;
+      z-index: 3;
+    }
+
+    .carousel-nav button.disabled {
+        background-color: rgba(0, 0, 0, 0.25);
+    }
+  </style>
+</head>
+<body>
+  <div id="map-carousel" class="carousel threed">
+    <div id="map-imgs">
+    </div>
+    
+    <div class="bottom-bar">
+        <span id="map-text"></span>
+        <div id="img-dots" class="carousel-dots">
+          </div>
+          <input id="map-select-input" list="maps-datalist"></input>
+          <datalist id="maps-datalist">
+          </datalist>
+    </div>
+
+
+    <div class="carousel-nav">
+        <button id="prev">Previous</button>
+        <span>
+            <button id="grid">Grid</button>
+            <button id="threed" class="disabled">3D</button>
+        </span>
+        <button id="next">Next</button>
+    </div>
+  </div>
+
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+
+  <script>
+    const layers = {
+        'Gildenberg': [
+            {file: 'gilden-01-begin',           alt: 'Starting State',          grid: false},
+            {file: 'gilden-02-demo',            alt: 'Demolished',              grid: true},
+            {file: 'gilden-03-corpse-prod',     alt: 'Corpses',                 grid: true},
+            {file: 'gilden-04-corpse-def',      alt: 'Defense<BR>Corpses',      grid: true},
+            {file: 'gilden-05-prod',            alt: 'Production',              grid: true},
+            {file: 'gilden-06-prod-def',        alt: 'Defense<BR>Production',   grid: true}
+        ],
+        'Lakeburg': [
+            {file: 'lake-01-begin',             alt: 'Starting State',          grid: false},
+            {file: 'lake-02-demo',              alt: 'Demolished',              grid: true},
+            {file: 'lake-03-corpse-prod',       alt: 'Corpses',                 grid: true},
+            {file: 'lake-04-corpse-def',        alt: 'Defense<BR>Corpses',      grid: true},
+            {file: 'lake-05-prod',              alt: 'Production',              grid: true},
+            {file: 'lake-06-prod-def',          alt: 'Defense<BR>Production',   grid: true}
+        ],
+        'Glenwald': [
+            {file: 'glen-01-begin',             alt: 'Starting State',          grid: false},    
+            {file: 'glen-02-demo',              alt: 'Demolished',              grid: true},
+            {file: 'glen-03-corpse-prod',       alt: 'Corpses',                 grid: true},
+            {file: 'glen-04-corpse-def',        alt: 'Defense<BR>Corpses',      grid: true},
+            {file: 'glen-05-prod',              alt: 'Production',              grid: true},
+            {file: 'glen-06-prod-def',          alt: 'Defense<BR>Production',   grid: true}
+        ],
+        'Runenberg': [
+            {file: 'runen-01-begin',            alt: 'Starting State',          grid: false},      
+            {file: 'runen-02-demo',             alt: 'Demolished',              grid: true},
+            {file: 'runen-03-alt-corpse-prod',  alt: 'Corpses',                 grid: true},
+            {file: 'runen-03-corpse-prod',      alt: 'Alternate<BR>Corpses',    grid: true},
+            {file: 'runen-04-corpse-def',       alt: 'Defense<BR>Corpses',      grid: true},
+            {file: 'runen-05-prod',             alt: 'Production',              grid: true},
+            {file: 'runen-06-prod-def',         alt: 'Defense<BR>Production',   grid: true}
+        ],
+        'Elderlicht': [
+            {file: 'elder-01-begin',            alt: 'Starting State',                      grid: false},        
+            {file: 'elder-02-demo',             alt: 'Demolished',                          grid: true},
+            {file: 'elder-03-2gm-seer',         alt: 'Seer<BR>2 Gold Mines<BR>Corpses',     grid: true},
+            {file: 'elder-03-alt-no-seer-3gm',  alt: 'No Seer<BR>3 Gold Mines<BR>Corpses',  grid: true},
+            {file: 'elder-03-seer-3gm',         alt: 'Seer<BR>3 Gold Mines<BR>Corpses',     grid: true},
+            {file: 'elder-04-corpse-def',       alt: 'Defenses<BR>Corpses',                 grid: true},
+            {file: 'elder-05-prod',             alt: 'Production',                          grid: true},
+            {file: 'elder-06-prod-def',         alt: 'Defenses<BR>Production',              grid: true}
+        ],
+        'Glintfein': [
+            {file: 'glint-01-begin',            alt: 'Starting State',          grid: false},     
+            {file: 'glint-02-demo',             alt: 'Demolished',              grid: true},
+            {file: 'glint-03-corpse-prod',      alt: 'Corpses',                 grid: true},
+            {file: 'glint-04-corpse-def',       alt: 'Defense<BR>Corpses',      grid: true},
+            {file: 'glint-05-prod',             alt: 'Production',              grid: true},
+            {file: 'glint-06-prod-def',         alt: 'Defense<BR>Production',   grid: true},
+        ]
+    }
+
+    var currentMapName = null;
+    function changeMap() {
+        const mapName = document.getElementById('map-select-input').value;
+        
+        if(currentMapName != mapName) {
+            console.log('Map Name Change!');
+            currentSlideIndex = 1;
+            currentMapName = mapName;
+        }
+
+        if(Object.keys(layers).includes(mapName)) {
+            const mapImages = document.getElementById('map-imgs');
+            mapImages.innerHTML = '';
+
+            const imgDots = document.getElementById('img-dots');
+            imgDots.innerHTML = '';
+
+            var gridOption = document.getElementById('map-carousel').classList.contains('grid') ? '-grid' : '';
+
+            var i = 0;
+            layers[mapName].forEach(layer => {
+                const newDot = document.createElement('span');
+                newDot.classList.add('carousel-dot');
+
+                const newMapImg = document.createElement('img');
+                newMapImg.src = 'https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/map-builds/'+layer.file+gridOption+'.png';
+                newMapImg.alt = layer.alt;
+                newMapImg.setAttribute('has-grid', layer.grid);
+                newMapImg.style.opacity = 0;
+
+                if(i == currentSlideIndex) {
+                    newMapImg.classList.add('active');
+                    newMapImg.style.opacity = 1;
+                    newDot.classList.add('active');
+                    document.getElementById('map-text').innerHTML = layer.alt;
+                    
+                    console.log(newMapImg.getAttribute('has-grid'))
+                    if(newMapImg.getAttribute('has-grid') == 'true') {
+                        console.log('Enabling....')
+                        document.getElementById('grid').classList.remove('disabled');
+                    } else {
+                        console.log('Disabling....')
+                        document.getElementById('grid').classList.add('disabled');
+                    }
+                }
+                newDot.setAttribute('index', i++);
+                newDot.setAttribute('title', layer.alt.replaceAll('<BR>', '\n'));
+                $(newDot).tooltip();
+                newDot.addEventListener('click', event => {
+                    const newIndex = event.target.getAttribute('index');
+                    changeSlide(newIndex);
+                });
+                mapImages.appendChild(newMapImg);
+                imgDots.appendChild(newDot);
+            });
+        } else {
+            console.log('Map not recognized... oops!')
+        }
+
+        carousel = document.querySelector('.carousel');
+        images = document.getElementById('map-imgs').querySelectorAll('img');
+        dots = document.getElementById('img-dots').querySelectorAll('.carousel-dot');
+        prevBtn = document.getElementById('prev');
+        nextBtn = document.getElementById('next');
+        gridBtn = document.getElementById('grid');
+        threeDBtn = document.getElementById('threed');
+        mapInput = document.getElementById('map-select-input');
+    }
+
+    // Get carousel elements
+    var carousel = document.querySelector('.carousel');
+    var images = document.getElementById('map-imgs').querySelectorAll('img');
+    var dots = document.getElementById('img-dots').querySelectorAll('.carousel-dot');
+    var prevBtn = document.getElementById('prev');
+    var nextBtn = document.getElementById('next');
+    var gridBtn = document.getElementById('grid');
+    var threeDBtn = document.getElementById('threed');
+    var mapInput = document.getElementById('map-select-input');
+    
+    mapInput.addEventListener('focus', event => { document.getElementById("map-select-input").value = ""; })
+    mapInput.addEventListener('change', event => {
+        event.target.blur();
+        changeMap(event.target.value);
+    });
+
+    // Set initial active slide index
+    let currentSlideIndex = 0;
+
+    // Function to change active slide and dot
+    function changeSlide(newIndex) {
+        var currentImg = images[currentSlideIndex];
+        var nextImg = images[newIndex];
+        
+        currentImg.style.transitionDelay = "0.25s";
+        currentImg.style.opacity = 0;
+        currentImg.addEventListener('transitionend', (event) => {
+            event.target.classList.remove('active');
+            event.target.style.transitionDelay = "0s";
+        });
+
+        nextImg.style.opacity = 1;
+        nextImg.classList.add('active');
+
+        images[currentSlideIndex].classList.remove('active');
+        dots[currentSlideIndex].classList.remove('active');
+        
+        images[newIndex].classList.add('active');
+        dots[newIndex].classList.add('active');
+        
+        currentSlideIndex = newIndex;
+
+        console.log(nextImg.getAttribute('has-grid'))
+        if(nextImg.getAttribute('has-grid') == 'true') {
+            console.log('Enabling....')
+            document.getElementById('grid').classList.remove('disabled');
+        } else {
+            console.log('Disabling....')
+            document.getElementById('grid').classList.add('disabled');
+        }
+        
+        document.getElementById('map-text').innerHTML = images[newIndex].alt;
+    }
+
+    // Previous button click event
+    prevBtn.addEventListener('click', () => {
+        const prevIndex = (currentSlideIndex - 1 + images.length) % images.length;
+        changeSlide(prevIndex);
+    });
+
+    // Next button click event
+    nextBtn.addEventListener('click', () => {
+        const nextIndex = (currentSlideIndex + 1) % images.length;
+        changeSlide(nextIndex);
+    });
+
+    gridBtn.addEventListener('click', event => {
+        if(event.target.classList.contains('disabled')) return;
+        
+        const mapCarousel = document.getElementById('map-carousel');
+        if(mapCarousel.classList.contains('grid')) {
+            mapCarousel.classList.remove('grid');
+            mapCarousel.classList.add('threed');
+            threeDBtn.classList.add('disabled');
+        } else {
+            mapCarousel.classList.add('grid');
+            threeDBtn.classList.remove('disabled');
+        }
+        changeMap();
+    });
+
+    threeDBtn.addEventListener('click', () => {
+        if(event.target.classList.contains('disabled')) return;
+
+        const mapCarousel = document.getElementById('map-carousel');
+        if(mapCarousel.classList.contains('threed')) {
+            mapCarousel.classList.remove('threed');
+        } else {
+            mapCarousel.classList.add('threed');
+        }
+    });
+
+    window.onload = function() {
+        const datalist = document.getElementById('maps-datalist')
+        Object.keys(layers).forEach(key => {
+            const opt = document.createElement('option');
+            opt.value = key;
+            datalist.appendChild(opt);
+        });
+        document.getElementById('map-select-input').value = "Runenberg";
+        changeMap();
+    }
+  </script>
+</body>
+</html>
