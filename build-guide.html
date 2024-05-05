@@ -8,8 +8,9 @@
     /* Container for the carousel */
     .carousel {
         position: relative;
+        overflow: hidden;
         --r: 1252/1100;
-        width: 90%;
+        width: 100%;
         aspect-ratio: var(--r);
     }
     
@@ -25,7 +26,7 @@
         transform: rotate3d(1, 0, 0, 0deg) rotate(0deg) scale(1);
     }
 
-    .carousel.grid img {
+    .carousel.show-grid img {
         position: absolute; 
         top: 0;
         left: 0;
@@ -34,7 +35,7 @@
         opacity: 0;
     }
 
-    .carousel.grid.threed img {
+    .carousel.show-grid.threed img {
         transform: rotate3d(1, 0, 0, 45deg) rotate(45deg) scale(1);
     }
 
@@ -43,7 +44,7 @@
         mix-blend-mode: normal;
     }
 
-    .carousel img.grid {
+    .carousel img.show-grid {
         transform: rotate3d(1, 0, 0, 45deg) rotate(45deg) scale(1);
     }
 
@@ -56,13 +57,19 @@
     }
 
     .bottom-bar input {
+        font-size: 2em;
         right: 0px;
         position: absolute;
         bottom: 4px;
     }
 
-    .bottom-bar span#map-text {
+    .bottom-bar .option {
         font-size: 2em;
+    }
+
+    .bottom-bar span#map-text {
+        font-size: 6em;
+        line-height: 80%;
         font-weight: bolder;
         left: 0px;
         position: absolute;
@@ -84,13 +91,15 @@
       height: 10px;
       margin: 0 5px;
       border-radius: 50%;
-      background-color: rgba(0, 0, 0, 0.5);
+      /* background-color: rgba(0, 0, 0, 0.5); */
+      background-color: #063900;
       cursor: pointer;
     }
     
     /* Style the active dot */
     .carousel-dot.active {
-      background-color: rgb(191, 191, 191);
+      /* background-color: rgb(191, 191, 191); */
+      background-color: #0f9300;
     }
 
     /* Navigation buttons */
@@ -104,17 +113,20 @@
     }
     
     .carousel-nav button {
+      font-size: 2em;
       position: relative;
       padding: 5px 10px;
       border: none;
-      background-color: rgba(0, 0, 0, 0.5);
+      /* background-color: rgba(0, 0, 0, 0.5); */
+      background-color: #0f9300;
       color: white;
       cursor: pointer;
       z-index: 3;
     }
 
     .carousel-nav button.disabled {
-        background-color: rgba(0, 0, 0, 0.25);
+        /* background-color: rgba(0, 0, 0, 0.25); */
+        background-color: #063900;
     }
   </style>
 </head>
@@ -134,12 +146,16 @@
 
 
     <div class="carousel-nav">
-        <button id="prev">Previous</button>
         <span>
-            <button id="grid">Grid</button>
-            <button id="threed" class="disabled">3D</button>
+            <button id="prev-button">Previous</button>
         </span>
-        <button id="next">Next</button>
+        <span>
+            <button id="grid-button">Grid</button>
+            <button id="threed-button" class="disabled">3D</button>
+        </span>
+        <span>
+            <button id="next-button">Next</button>
+        </span>
     </div>
   </div>
 
@@ -219,7 +235,7 @@
             const imgDots = document.getElementById('img-dots');
             imgDots.innerHTML = '';
 
-            var gridOption = document.getElementById('map-carousel').classList.contains('grid') ? '-grid' : '';
+            var gridOption = document.getElementById('map-carousel').classList.contains('show-grid') ? '-grid' : '';
 
             var i = 0;
             layers[mapName].forEach(layer => {
@@ -227,7 +243,9 @@
                 newDot.classList.add('carousel-dot');
 
                 const newMapImg = document.createElement('img');
-                newMapImg.src = 'https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/map-builds/'+layer.file+gridOption+'.png';
+                const urlBase = 'https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/map-builds/';
+                // const urlBase = 'assets/tls/map-builds/';
+                newMapImg.src = urlBase+layer.file+gridOption+'.png';
                 newMapImg.alt = layer.alt;
                 newMapImg.setAttribute('has-grid', layer.grid);
                 newMapImg.style.opacity = 0;
@@ -241,10 +259,10 @@
                     console.log(newMapImg.getAttribute('has-grid'))
                     if(newMapImg.getAttribute('has-grid') == 'true') {
                         console.log('Enabling....')
-                        document.getElementById('grid').classList.remove('disabled');
+                        document.getElementById('grid-button').classList.remove('disabled');
                     } else {
                         console.log('Disabling....')
-                        document.getElementById('grid').classList.add('disabled');
+                        document.getElementById('grid-button').classList.add('disabled');
                     }
                 }
                 newDot.setAttribute('index', i++);
@@ -264,10 +282,10 @@
         carousel = document.querySelector('.carousel');
         images = document.getElementById('map-imgs').querySelectorAll('img');
         dots = document.getElementById('img-dots').querySelectorAll('.carousel-dot');
-        prevBtn = document.getElementById('prev');
-        nextBtn = document.getElementById('next');
-        gridBtn = document.getElementById('grid');
-        threeDBtn = document.getElementById('threed');
+        prevBtn = document.getElementById('prev-button');
+        nextBtn = document.getElementById('next-button');
+        gridBtn = document.getElementById('grid-button');
+        threeDBtn = document.getElementById('threed-button');
         mapInput = document.getElementById('map-select-input');
     }
 
@@ -275,10 +293,10 @@
     var carousel = document.querySelector('.carousel');
     var images = document.getElementById('map-imgs').querySelectorAll('img');
     var dots = document.getElementById('img-dots').querySelectorAll('.carousel-dot');
-    var prevBtn = document.getElementById('prev');
-    var nextBtn = document.getElementById('next');
-    var gridBtn = document.getElementById('grid');
-    var threeDBtn = document.getElementById('threed');
+    var prevBtn = document.getElementById('prev-button');
+    var nextBtn = document.getElementById('next-button');
+    var gridBtn = document.getElementById('grid-button');
+    var threeDBtn = document.getElementById('threed-button');
     var mapInput = document.getElementById('map-select-input');
     
     mapInput.addEventListener('focus', event => { document.getElementById("map-select-input").value = ""; })
@@ -316,10 +334,10 @@
         console.log(nextImg.getAttribute('has-grid'))
         if(nextImg.getAttribute('has-grid') == 'true') {
             console.log('Enabling....')
-            document.getElementById('grid').classList.remove('disabled');
+            document.getElementById('show-grid').classList.remove('disabled');
         } else {
             console.log('Disabling....')
-            document.getElementById('grid').classList.add('disabled');
+            document.getElementById('show-grid').classList.add('disabled');
         }
         
         document.getElementById('map-text').innerHTML = images[newIndex].alt;
@@ -341,12 +359,12 @@
         if(event.target.classList.contains('disabled')) return;
         
         const mapCarousel = document.getElementById('map-carousel');
-        if(mapCarousel.classList.contains('grid')) {
-            mapCarousel.classList.remove('grid');
+        if(mapCarousel.classList.contains('show-grid')) {
+            mapCarousel.classList.remove('show-grid');
             mapCarousel.classList.add('threed');
             threeDBtn.classList.add('disabled');
         } else {
-            mapCarousel.classList.add('grid');
+            mapCarousel.classList.add('show-grid');
             threeDBtn.classList.remove('disabled');
         }
         changeMap();
