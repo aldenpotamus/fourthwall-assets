@@ -6,6 +6,10 @@
   <title>The Last Spell Haven Builds</title>
   <style>
     /* Container for the carousel */
+    .container {
+        max-width: 1000px !important;
+    }
+    
     .carousel {
         position: relative;
         overflow: hidden;
@@ -53,22 +57,25 @@
       bottom: 10px;
       display: flex;
       justify-content: center;
-      width: 100%;       
+      width: 100%;
     }
 
     .bottom-bar input {
-        font-size: 2em;
+        /* font-size: 2em; */
+        font-size: min(2vw, 2em);
         right: 0px;
         position: absolute;
         bottom: 4px;
     }
 
     .bottom-bar .option {
-        font-size: 2em;
+        /* font-size: 2em; */
+        font-size: min(2vw, 3em);
     }
 
     .bottom-bar span#map-text {
-        font-size: 6em;
+        /* font-size: 6em; */
+        font-size: min(5vw, 4.5em);
         line-height: 80%;
         font-weight: bolder;
         left: 0px;
@@ -84,13 +91,17 @@
       display: flex;
       justify-content: center;
       width: 100%;
+      gap: min(max(1vw, 5px), 15px);
     }
     
     /* Navigation dot */
     .carousel-dot {
-      width: 10px;
-      height: 10px;
-      margin: 0 5px;
+      /* width: 10px;
+      height: 10px; */
+      width: min(max(1vw, 5px), 15px);
+      height: min(max(1vw, 5px), 15px);
+      margin: 0;
+      padding: 0;
       border-radius: 50%;
       /* background-color: rgba(0, 0, 0, 0.5); */
       background-color: #063900;
@@ -115,7 +126,8 @@
     
     .carousel-nav button {
       border-radius: 10px;
-      font-size: 2em;
+      /* font-size: 2em; */
+      font-size: min(3vw, 3em);
       position: relative;
       padding: 5px 10px;
       border: none;
@@ -136,7 +148,8 @@
     }
 
     #title h1 {
-        font-size: 7em;
+        font-size: min(6vw, 8em);
+        /* font-size: 7em; */
         padding: 0px;
         margin: 0px;
         font-weight: bolder;
