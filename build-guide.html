@@ -240,7 +240,7 @@
     <div id="main">
         <h1>BUILD GUIDE</h1>
         <canvas id="uploaded-file"></canvas>
-        Supported resolutions are 1280x720 @ 100 UI Scale or 2560x1440 @ 200% UI Scale
+        Supported resolutions are 2560-200%, 1920-175%, 1280-100% (non 16:9 aspect ratio experimental, % is UI scale).
         <label for="file-upload" class="custom-file-upload">
             Upload Screenshot of Perks Panel
         </label>
@@ -443,8 +443,10 @@
         return imgDNA;
     }
 
+    var imageScaler = 1;
+    var imageShift = 0;
     function getPerkPixel(ctx, x, y, xSeed, ySeed) {
-        pixelData = ctx.getImageData((xOffsets[x]+xSeed)*imageScaler, (yOffsets[y]+ySeed)*imageScaler, 1, 1);
+        pixelData = ctx.getImageData((xOffsets[x]+xSeed)*imageScaler+imageShift, (yOffsets[y]+ySeed)*imageScaler, 1, 1);
 
         // ctx.fillStyle = "rgba("+0+","+255+","+0+","+(30/255)+")";
         // ctx.fillRect(xOffsets[x]+xSeed, yOffsets[y]+ySeed, 2, 2);
@@ -517,14 +519,26 @@
             canvas.height = imgHeight;
 
             ctx.drawImage(image, 0, 0, imgWidth, imgHeight);
-            if(imgWidth == 2560 && imgHeight == 1440) {
-                imageScaler = 1;
-            } else if (imgWidth == 1280 && imgHeight == 720) {
-                imageScaler = 0.5;
+            if(imgWidth == 3840) {
+                imageScaler = imgWidth / 2560;
+                imageShift = imgHeight - 2166;
+            } else if(imgWidth == 2560) {
+                imageScaler = imgWidth / 2560;
+                imageShift = imgHeight - 1440;
+            } else if (imgWidth == 1920) {
+                imageScaler = imgWidth / 2560;
+                imageShift = imgHeight - 1080;
+            } else if (imgWidth == 1366) { 
+                imageScaler = imgWidth / 2560;
+                imageShift = imgHeight - 768;
+            } else if (imgWidth == 1280) {
+                imageScaler = imgWidth / 2560;
+                imageShift = imgHeight - 720;
             } else {
                 window.alert('Uploaded image is in a size that can\'t be parse.  Set your system & game resolution to 2560x1440 (game UI scale to 200%) or 1280x720 (game UI scale to 100%).')
                 return;
             }
+            console.log(imageShift);
 
             const perkGrid = document.getElementById('perk-grid');
             perkGrid.innerHTML = '';
@@ -664,6 +678,7 @@
                     return 1;
                 });
 
+                buildOptions = document.getElementById('build-options');
                 buildOptions.innerHTML = '';
                 buildButtons.forEach(build => {
                     buildOptions.appendChild(build.buildElement);
