@@ -154,6 +154,15 @@
         z-index: 2;
     }
 
+    .selected > img {
+        opacity: 100%;
+    }
+
+    .not-selected > img {
+        opacity: 50%;
+
+    }
+
     .not-selected > * {
         opacity: 1;
         transition: opacity 0.5s;
@@ -197,8 +206,8 @@
 
     .rating-decorator {
         position: absolute;
-        bottom: 20%;
-        right: 50%;
+        bottom: 63%;
+        left: 25%;
         transform: translate(10px, 10px) scale(.5, .5);
     }
 
@@ -240,7 +249,8 @@
     <div id="main">
         <h1>BUILD GUIDE</h1>
         <canvas id="uploaded-file"></canvas>
-        Supported resolutions are 2560-200%, 1920-175%, 1280-100% (non 16:9 aspect ratio experimental, % is UI scale).
+        <div style="text-align: center;">Supported resolution heights are 1440 (200% UI), 1080 (175% UI), 720 (100% UI), non-16:9 aspect ratios are experimental.<br>
+        For a sample screenshot to test with, download <a href="https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/build_guide_support/sample.png">this image</a>.</div>
         <label for="file-upload" class="custom-file-upload">
             Upload Screenshot of Perks Panel
         </label>
@@ -253,47 +263,137 @@
 </body>
 <script>
     builds = {
-        "./builds/buffer-alchemist.png" : {
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/baneful-dodger.png" : {
+            name: "Baneful Dodger",
+            rating: .29,
+            critical: ['Adrenaline Rush', 'Septic Shock', 'Poisonous'],
+            nicetohave: ['Berserk', 'Blessing', 'Sadist']
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/buffer-alchemist.png" : {
             name: "Buffer Alchemist",
-            rating: .33,
-            critical: ['Avid Learner', 'Nimbleness', 'Thickness'],
-            nicetohave: ['Blessing', 'Critical Master', 'Potent Toxins']
+            rating: .36,
+            critical: ['Potion Throw', 'Overload', 'Blessing'],
+            nicetohave: ['Warcry', 'Sadist', 'Heart of the Party']
         },
-        "./builds/drunk-assassin.png" : {
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/drunk-assassin.png" : {
             name: "Drunk Assassin",
-            rating: .66,
-            critical: ['Avid Learner', 'Nimbleness', 'Thickness'],
-            nicetohave: ['Blessing', 'Critical Master', 'Potent Toxins']
+            rating: .15,
+            critical: ['Critical Runes', 'Legendary Assassin', 'Crippling Punch'],
+            nicetohave: ['Mana Growth', 'Overload', 'Longer Weapons']
         },
-        "./builds/explosive-leech-hog.png" : {
-            name: "Toxic Leech Hog",
-            rating: .5,
-            critical: ['Avid Learner', 'Nimbleness', 'Thickness'],
-            nicetohave: ['Blessing', 'POTATO', 'Potent Toxins']
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/explosive-leech-hog.png" : {
+            name: "Explosive Leech-Hog",
+            rating: .15,
+            critical: ['Berserk', 'Blood Collector', 'Blood Magic'],
+            nicetohave: ['Proximity Shot', 'Critical Master', 'Spiky Counter']
         },
-        "./builds/gun-fu.png" : {
-            name: "Gun-fu",
-            rating: 1.0,
-            critical: ['Avid Learner', 'Nimbleness', 'Thickness'],
-            nicetohave: ['Blessing', 'POTATO POTATO', 'Potent Toxins']
-        },        
-        "./builds/health-mage.png" : {
-            name: "Health Mage",
-            rating: .76,
-            critical: ['Avid Learner', 'Nimbleness', 'Thickness'],
-            nicetohave: ['Blessing', 'BOOP', 'BOOP']
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/gun-fu.png" : {
+            name: "GUN-FU",
+            rating: .09,
+            critical: ['Crippling Punch', 'Flexibility', 'Adrenaline Rush'],
+            nicetohave: ['Relentless', 'Inertia', 'BOOM!']
         },
-        "./builds/hedgehog.png" : {
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/health-mage.png" : {
+            name: "Healthmage",
+            rating: .70,
+            critical: ['Organic Armor', 'Blood Magic', 'Body Builder'],
+            nicetohave: ['Sanguine Fuel', 'Vampire', 'Coagulation']
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/hedgehog.png" : {
             name: "Hedgehog",
-            rating: .1,
-            critical: ['Avid Learner', 'Nimbleness', 'Thickness'],
-            nicetohave: ['Blessing', 'Critical Master', 'Potent Toxins']
+            rating: .85,
+            critical: ['Berserk', 'Vampire', 'Blood Magic'],
+            nicetohave: ['Spiky Counter', 'Thickness', 'Blink']
         },
-        "./builds/lawn-mower.png" : {
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/lawn-mower.png" : {
             name: "Lawn Mower",
-            rating: .2,
-            critical: ['Avid Learner', 'Nimbleness', 'Thickness'],
-            nicetohave: ['Blessing', 'Critical Master', 'Potent Toxins']
+            rating: .5,
+            critical: ['BOOM!', 'Contamination', 'Sadist'],
+            nicetohave: ['Blessing', 'Bully', "You're Next"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/market-gardener.png" : {
+            name: "Market Gardener",
+            rating: .3,
+            critical: ['Vampire', 'Critical Runes', 'Big Game Hunter'],
+            nicetohave: ['Poisonous', 'Berserk', "Glass Cannon"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/miasma-gorgon.png" : {
+            name: "Miasma Gorgon",
+            rating: .28,
+            critical: ['Septic Shock', 'Poisonous', 'Spiky Counter'],
+            nicetohave: ['Toxic Leech', 'Sadist', "Contamination"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/momentum.png" : {
+            name: "Momentum",
+            rating: .85,
+            critical: ['Inertia', 'Relentless', 'BOOM!'],
+            nicetohave: ['Big Game Hunter', 'Proximity Shot', "Flexibility"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/multi-crit.png" : {
+            name: "Multi-Crit",
+            rating: 1.00,
+            critical: ['Critical Master', 'Mana Collector', 'Legendary Assassin'],
+            nicetohave: ['Big Game Hunter', 'Carnage', "Glass Cannon"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/poison-pogate.png" : {
+            name: "Poison-pogate",
+            rating: .58,
+            critical: ['Potent Toxins', 'Volatile Reactions', 'Contamination'],
+            nicetohave: ['Septic Shock', 'Sadist', "Blessing"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/poison-poker.png" : {
+            name: "Poison-Poker",
+            rating: .50,
+            critical: ['Potent Toxins', 'Epidemic', 'Mana Collector'],
+            nicetohave: ['Initiator', 'Thrifty', "Glass Cannon"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/poison-stunner.png" : {
+            name: "Poison Stunner",
+            rating: .75,
+            critical: ['Septic Shock', 'Contamination', 'Hex'],
+            nicetohave: ['Stunning', 'Potent Toxins', "Sadist"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/prop-me-critly.png" : {
+            name: "Prop Me Critly",
+            rating: .57,
+            critical: ['Mana Collector', 'Volatile Reactions', 'Crit Master'],
+            nicetohave: ['Heart of the Party', 'Critical Runes', "Thrifty"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/sanguine-alchemist.png" : {
+            name: "Sanguine Alchemist",
+            rating: .45,
+            critical: ['Blood Magic', 'Potion Throw', 'Overload'],
+            nicetohave: ['Explosive Hemoglobin', 'Vivified', "Sanguine Fuel"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/sniper.png" : {
+            name: "Sniper",
+            rating: .27,
+            critical: ['Longer Weapons', 'Exploit Weakness', 'Third Eye'],
+            nicetohave: ['Legendary Assassin', 'Emergency Tunnel', "Steady Aim"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/stoutpire.png" : {
+            name: "Stoutpire",
+            rating: .45,
+            critical: ['Body Builder', 'Organic Armor', 'Vampire'],
+            nicetohave: ['Heart of the Party', 'Initiator', "Overload"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/stunner.png" : {
+            name: "Long Arm of the Stun",
+            rating: .75,
+            critical: ['Contamination', 'Longer Weapons', 'Hex'],
+            nicetohave: ['Bully', 'Stunning', "Sadist"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/the-sadist.png" : {
+            name: "The Sadist",
+            rating: 1.0,
+            critical: ['Sadist', 'Contamination', 'Blessing'],
+            nicetohave: ['Bully', 'Critical Master', "Mana Collector"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/war-crier.png" : {
+            name: "The Town War Crier",
+            rating: .70,
+            critical: ['Warcry', 'Blessing', 'Organic Armor'],
+            nicetohave: ['Thickness', 'Coagulation', "Avid Learner"]
         }
     }
     
@@ -417,6 +517,18 @@
     xSize = 84
     ySize = 84
 
+    supportedResolutions = {
+        1440: {
+            width: 2560
+        },
+        1080: {
+            width: 1920
+        },
+        720: {
+            width: 1280
+        }
+    }
+
     function extractDNA(ctx, x, y) {
         imgDNA = ''
         seedPixels.forEach(seedPixel => {   
@@ -519,25 +631,17 @@
             canvas.height = imgHeight;
 
             ctx.drawImage(image, 0, 0, imgWidth, imgHeight);
-            if(imgWidth == 3840) {
-                imageScaler = imgWidth / 2560;
-                imageShift = imgHeight - 2166;
-            } else if(imgWidth == 2560) {
-                imageScaler = imgWidth / 2560;
-                imageShift = imgHeight - 1440;
-            } else if (imgWidth == 1920) {
-                imageScaler = imgWidth / 2560;
-                imageShift = imgHeight - 1080;
-            } else if (imgWidth == 1366) { 
-                imageScaler = imgWidth / 2560;
-                imageShift = imgHeight - 768;
-            } else if (imgWidth == 1280) {
-                imageScaler = imgWidth / 2560;
-                imageShift = imgHeight - 720;
+            if(Object.keys(supportedResolutions).includes(imgHeight.toString())) {
+                imageScaler = imgHeight / 1440;
+                console.log(imgHeight)
+                console.log(parseInt(supportedResolutions[imgHeight]))
+                imageShift = (imgWidth - parseInt(supportedResolutions[imgHeight].width))/2;
             } else {
-                window.alert('Uploaded image is in a size that can\'t be parse.  Set your system & game resolution to 2560x1440 (game UI scale to 200%) or 1280x720 (game UI scale to 100%).')
+                window.alert('Uploaded image is in a size that can\'t be parse.  Set your system & game resolution height to [1440@200%, 1080@175%, 720@100%].')
                 return;
             }
+            
+            console.log(imageScaler);
             console.log(imageShift);
 
             const perkGrid = document.getElementById('perk-grid');
@@ -581,7 +685,7 @@
                 // console.log(foundNiceToHavePerkElements);
                 // console.log(missingPerkElements);
 
-                if(foundCriticalPerkElements.length == 3) {
+                if(foundCriticalPerkElements.length >= 2) {
                     const buildButtonPH = document.createElement('div');
                     buildButtonPH.classList.add('build-button-ph');
 
@@ -591,7 +695,7 @@
                     buildButtonPH.appendChild(buildButton);
 
                     const matchPct = document.createElement('div');
-                    matchPct.innerHTML = Math.round(foundNiceToHavePerkElements.length/3*100)+'%';
+                    matchPct.innerHTML = Math.round((foundCriticalPerkElements.length*2+foundNiceToHavePerkElements.length)/9*100)+'%';
                     matchPct.classList.add('match-percent');
 
                     const ratingPct = document.createElement('div');
@@ -615,8 +719,8 @@
                     buildNameplatePH.appendChild(buildnameDiv);
 
                     var i = new Image();
-                    // i.src = key;
-                    i.src = 'https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/ph.png'
+                    i.src = key;
+                    // i.src = 'https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/ph.png'
                     buildButton.appendChild(i);
                     buildButton.appendChild(matchPct);
                     buildButton.appendChild(ratingPct);
@@ -668,6 +772,9 @@
                     // buildOptions.appendChild(buildButtonPH);
                 }
             });
+
+            if(!buildButtons.length)
+                console.log('NO BUILDS FOUND!');
 
             buildButtons = buildButtons.sort((item1, item2) => {
                     if(item1.matchPct > item2.matchPct)
