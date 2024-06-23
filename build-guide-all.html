@@ -1,0 +1,416 @@
+<style>
+    #main {
+        position: relative;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #build-options {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        width: 70%;
+        row-gap: 25px;
+    }
+
+    .build-button-ph {
+        width: 250px;
+        height: 250px;       
+    }
+
+    .build-button {
+        position: relative;
+        width: 250px;
+        height: 250px;
+    }
+
+    .build-button > img {
+        width: 100%;
+        filter: drop-shadow(3px 3px 5px #1aff00);
+    }
+
+    .build-button > .match-percent {
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
+        background-color: #1aff00;
+        color: black;
+        /* filter: drop-shadow(5px 5px 3px #1aff00); */
+        font-weight: bolder;
+        font-size: 2em;
+        border-radius: 10px;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .not-selected {
+        transform: scale(1,1) translate(0px, 0px);
+        -webkit-transition: all 0.5s ease-in-out;
+        -moz-transition: all 0.5s ease-in-out;
+        -o-transition: all 0.5s ease-in-out;
+        transition: all 0.5s ease-in-out;
+        z-index: 0;
+    }
+
+    .selected {
+        top: var(--startY);
+        left: var(--startX);
+        -webkit-transition: all 0.5s ease-in-out;
+        -moz-transition: all 0.5s ease-in-out;
+        -o-transition: all 0.5s ease-in-out;
+        transition: all 0.5s ease-in-out;
+        position:absolute;
+        transform: translate(calc((var(--destX) - (var(--startX))) * 1px), calc((var(--destY) - (var(--startY))) * 1px)) scale(var(--scale)); 
+        /* box-shadow: 25px 25px 25px 1px rgb(0 0 0 / 20%); */
+        z-index: 2;
+    }
+
+    .selected > img {
+        opacity: 100%;
+    }
+
+    .not-selected > img {
+        opacity: 50%;
+
+    }
+
+    .not-selected > * {
+        opacity: 1;
+        transition: opacity 0.5s;
+    }
+
+    .selected > .match-percent {
+        opacity: 0;
+        transition: opacity 0.5s;
+    }
+
+    .selected > .rating-decorator {
+        opacity: 0;
+        transition: opacity 0.5s;
+    }
+
+    .selected > .build-nameplate-ph {
+        opacity: 0;
+        transition: opacity 0.5s;
+    }
+
+    .selected > img {
+        /* box-shadow: 25px 25px 25px 1px rgb(0 0 0 / 20%); */
+        filter: drop-shadow(0px 0px 25px #1aff00);
+    }
+
+    .rating {
+        position: absolute;
+        width: calc(187 * (var(--pct) + 0.035) * 1px);
+        height: 76.34px;
+        overflow: hidden;
+    }
+
+    .rating > img {
+        width: 200px;
+        position: absolute;
+        object-fit: cover;
+        top: 0px;
+        left: 0px;
+        z-index: 4 !important;
+    }
+
+    .rating-decorator {
+        position: absolute;
+        bottom: 63%;
+        left: 25%;
+        transform: translate(10px, 10px) scale(.5, .5);
+    }
+
+    .rating-decorator img {
+        position: absolute;
+        width: 200px;
+        top: 0px;
+        left: 0px;
+        max-width: unset !important;
+    }
+
+    .build-nameplate-ph {
+        position: absolute;
+        top: 23px;
+        width: 100%;
+        height: 22px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .build-nameplate {
+        /* filter: drop-shadow(5px 5px 3px #1aff00); */
+        font-size: 1.0em;
+        font-weight: bolder;
+        text-align: center;
+        padding-top: 5px;
+        background-color: #1aff00;
+        color: black;
+        text-transform: uppercase;
+        border-radius: 15px;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 25px;
+        height: 22px;
+    }
+
+    :root {
+        --startY: 0;
+        --startX: 0;
+        --destY: 0;
+        --destX: 0;
+
+        --canvasOffsetTop: 0;
+        --canvasOffsetLeft: 0;
+        --canvasLeft: 0;
+
+        --rating-pct: .33;
+    }
+</style>
+<body>
+    <div id="main">
+        <h1 style="margin-bottom: 50px;">BUILD LIBRARY</h1>
+        <div id="build-options"></div>
+    </div>
+</body>
+<script>  
+    selectedElement = null;
+
+    builds = {
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/baneful-dodger.png" : {
+            name: "Baneful Dodger",
+            rating: .29,
+            critical: ['Adrenaline Rush', 'Septic Shock', 'Poisonous'],
+            nicetohave: ['Berserk', 'Blessing', 'Sadist']
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/buffer-alchemist.png" : {
+            name: "Buffer Alchemist",
+            rating: .36,
+            critical: ['Potion Throw', 'Overload', 'Blessing'],
+            nicetohave: ['Warcry', 'Sadist', 'Heart of the Party']
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/drunk-assassin.png" : {
+            name: "Drunk Assassin",
+            rating: .15,
+            critical: ['Critical Runes', 'Legendary Assassin', 'Crippling Punch'],
+            nicetohave: ['Mana Growth', 'Overload', 'Longer Weapons']
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/explosive-leech-hog.png" : {
+            name: "Explosive Leech-Hog",
+            rating: .75,
+            critical: ['Berserk', 'Blood Collector', 'Blood Magic'],
+            nicetohave: ['Proximity Shot', 'Critical Master', 'Spiky Counter']
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/gun-fu.png" : {
+            name: "GUN-FU",
+            rating: .09,
+            critical: ['Crippling Punch', 'Flexibility', 'Adrenaline Rush'],
+            nicetohave: ['Relentless', 'Inertia', 'BOOM!']
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/health-mage.png" : {
+            name: "Healthmage",
+            rating: .70,
+            critical: ['Organic Armor', 'Blood Magic', 'Body Builder'],
+            nicetohave: ['Sanguine Fuel', 'Vampire', 'Coagulation']
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/hedgehog.png" : {
+            name: "Hedgehog",
+            rating: .85,
+            critical: ['Berserk', 'Vampire', 'Blood Magic'],
+            nicetohave: ['Spiky Counter', 'Thickness', 'Blink']
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/lawn-mower.png" : {
+            name: "Lawn Mower",
+            rating: .5,
+            critical: ['BOOM!', 'Contamination', 'Sadist'],
+            nicetohave: ['Blessing', 'Bully', "You're Next"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/market-gardener.png" : {
+            name: "Market Gardener",
+            rating: .3,
+            critical: ['Vampire', 'Critical Runes', 'Big Game Hunter'],
+            nicetohave: ['Poisonous', 'Berserk', "Glass Cannon"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/miasma-gorgon.png" : {
+            name: "Miasma Gorgon",
+            rating: .28,
+            critical: ['Septic Shock', 'Poisonous', 'Spiky Counter'],
+            nicetohave: ['Toxic Leech', 'Sadist', "Contamination"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/momentum.png" : {
+            name: "Momentum",
+            rating: .85,
+            critical: ['Inertia', 'Relentless', 'BOOM!'],
+            nicetohave: ['Big Game Hunter', 'Proximity Shot', "Flexibility"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/multi-crit.png" : {
+            name: "Multi-Crit",
+            rating: 1.00,
+            critical: ['Critical Master', 'Mana Collector', 'Legendary Assassin'],
+            nicetohave: ['Big Game Hunter', 'Carnage', "Glass Cannon"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/poison-pogate.png" : {
+            name: "Poison-pogate",
+            rating: .58,
+            critical: ['Potent Toxins', 'Volatile Reactions', 'Contamination'],
+            nicetohave: ['Septic Shock', 'Sadist', "Blessing"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/poison-poker.png" : {
+            name: "Poison-Poker",
+            rating: .50,
+            critical: ['Potent Toxins', 'Epidemic', 'Mana Collector'],
+            nicetohave: ['Initiator', 'Thrifty', "Glass Cannon"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/poison-stunner.png" : {
+            name: "Poison Stunner",
+            rating: .75,
+            critical: ['Septic Shock', 'Contamination', 'Hex'],
+            nicetohave: ['Stunning', 'Potent Toxins', "Sadist"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/prop-me-critly.png" : {
+            name: "Prop Me Critly",
+            rating: .57,
+            critical: ['Mana Collector', 'Volatile Reactions', 'Crit Master'],
+            nicetohave: ['Heart of the Party', 'Critical Runes', "Thrifty"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/sanguine-alchemist.png" : {
+            name: "Sanguine Alchemist",
+            rating: .45,
+            critical: ['Blood Magic', 'Potion Throw', 'Overload'],
+            nicetohave: ['Explosive Hemoglobin', 'Vivified', "Sanguine Fuel"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/sniper.png" : {
+            name: "Sniper",
+            rating: .27,
+            critical: ['Longer Weapons', 'Exploit Weakness', 'Third Eye'],
+            nicetohave: ['Legendary Assassin', 'Emergency Tunnel', "Steady Aim"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/stoutpire.png" : {
+            name: "Stoutpire",
+            rating: .45,
+            critical: ['Body Builder', 'Organic Armor', 'Vampire'],
+            nicetohave: ['Heart of the Party', 'Initiator', "Overload"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/stunner.png" : {
+            name: "Long Arm of the Stun",
+            rating: .75,
+            critical: ['Contamination', 'Longer Weapons', 'Hex'],
+            nicetohave: ['Bully', 'Stunning', "Sadist"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/the-sadist.png" : {
+            name: "The Sadist",
+            rating: 1.0,
+            critical: ['Sadist', 'Contamination', 'Blessing'],
+            nicetohave: ['Bully', 'Critical Master', "Mana Collector"]
+        },
+        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/war-crier.png" : {
+            name: "The Town War Crier",
+            rating: .70,
+            critical: ['Warcry', 'Blessing', 'Organic Armor'],
+            nicetohave: ['Thickness', 'Coagulation', "Avid Learner"]
+        }
+    }
+
+    buildButtons = [];
+
+    function setSizeProps(event) {
+        if(selectedElement) {
+            var root = document.querySelector(':root');
+            root.style.setProperty('--startY', selectedElement.offsetTop);
+            root.style.setProperty('--startX', selectedElement.offsetLeft);
+    
+            var objectSize = 250;
+            
+            var winHeight = window.innerHeight;
+            var winScrollY = window.scrollY;
+            var yMidpoint = (winHeight / 2) + winScrollY - (objectSize / 2) - (winHeight * .10);
+            
+            var winWidth = window.innerWidth;
+            var winScrollX = window.scrollX;
+            var xMidpoint = (winWidth / 2) + winScrollX - (objectSize / 2);
+    
+            console.log("Height: "+winHeight+" Scroll: "+winScrollY+" Object Size: "+objectSize+" Final: "+yMidpoint);
+            console.log("Width: "+winWidth+" Scroll: "+winScrollX+" Object Size: "+objectSize+" Final: "+xMidpoint);
+    
+            root.style.setProperty('--destY', yMidpoint);
+            root.style.setProperty('--destX', xMidpoint);
+
+            root.style.setProperty('--scale', Math.min(winHeight, winWidth) / 350);
+        }
+    }
+
+    window.addEventListener("resize", setSizeProps);
+    window.addEventListener("scroll", setSizeProps);
+
+    window.onload = (event) => {
+        window.dispatchEvent(new Event('resize'));
+    };
+
+    Object.keys(builds).forEach(key => {
+        const buildButtonPH = document.createElement('div');
+        buildButtonPH.classList.add('build-button-ph');
+
+        const buildButton = document.createElement('div');
+        buildButton.classList.add('build-button');
+        buildButton.classList.add('not-selected');
+        buildButtonPH.appendChild(buildButton);
+
+        const ratingPct = document.createElement('div');
+        ratingPct.classList.add('rating-decorator');
+        const rating = document.createElement('div');
+        rating.classList.add('rating');
+        rating.style = "--pct: "+builds[key]['rating'];
+        const ratingScoreImg = new Image();
+        ratingScoreImg.src = 'https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/build_guide_support/ratings.png';
+        rating.appendChild(ratingScoreImg);
+        ratingPct.appendChild(rating);
+        const ratingImg = new Image();
+        ratingImg.src = 'https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/build_guide_support/rating-frame.png';
+        ratingPct.append(ratingImg);
+
+        const buildNameplatePH = document.createElement('div');
+        buildNameplatePH.classList.add('build-nameplate-ph');
+        const buildnameDiv = document.createElement('div');
+        buildnameDiv.classList.add('build-nameplate');
+        buildnameDiv.innerHTML = builds[key]['name'];
+        buildNameplatePH.appendChild(buildnameDiv);
+
+        var i = new Image();
+        i.src = key;
+        buildButton.appendChild(i);
+        buildButton.appendChild(ratingPct);
+        buildButton.appendChild(buildNameplatePH);
+
+        buildButton.addEventListener('click', e => {
+            const selected = e.currentTarget.classList.contains('selected');
+
+            selectedElement = e.currentTarget;
+            setSizeProps();
+
+            e.currentTarget.closest('#build-options').childNodes.forEach(sib => {
+                sib.querySelector('.build-button').classList.add('not-selected');
+                sib.querySelector('.build-button').classList.remove('selected');
+            })
+            if(!selected) {
+                e.currentTarget.classList.add('selected');
+                e.currentTarget.classList.remove('not-selected');
+            }
+        });
+
+        buildButtons.push({
+            rating: builds[key]['rating'],
+            buildElement: buildButtonPH
+        });
+    });
+
+
+    buildOptions = document.getElementById('build-options');
+    buildOptions.innerHTML = '';
+    buildButtons.forEach(build => {
+        buildOptions.appendChild(build.buildElement);
+    });
+</script>
