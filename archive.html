@@ -186,7 +186,7 @@ https://i3.ytimg.com/vi/hVItLfGbyvA/maxresdefault.jpg
                     } else {
                         partCounter[key] = 1;
                     }
-                    row["Ep #"] += "-"+partCounter[key];
+                    row["Ep #"] += row["Ep #"] != "" ? "-"+partCounter[key]: row["Ep #"] = "SPECIAL";      
 
                     // row["Link"] = "https://youtu.be/"+row["Link"];
                     // row["Link"] = "<img src=\'http://i3.ytimg.com/vi/hVItLfGbyvA/hqdefault.jpg"+row["Link"]+"\'\\>";
