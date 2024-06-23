@@ -1,9 +1,9 @@
 <style>
     .sched_container {
         border: 1px solid #ddd;
-        border-radius: 5px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
         padding-top: 5px;
-        padding-bottom: 5px;
         background: linear-gradient(to bottom,
                 /* Direction of the gradient */
                 #0f9300 0%,
@@ -29,7 +29,8 @@
     }
 
     th.sched_header {
-        width: calc(100% / 5);
+        /* width: calc(100% / 5); */
+        width: calc(100% - 100px) / 5;
         /* Distribute 100% equally across 7 columns */
         border-right: 1px solid white;
         /* Add white vertical divider to right border */
@@ -49,19 +50,19 @@
         /* Set full width for table */
     }
 
-    th:last-child,
+    /* th:last-child,
     td:last-child,
     th.sched:last-child,
     td.sched:last-child {
-        /* Remove right border on last column */
         border-right: none;
-    }
+    } */
 
     th.sched,
     td.sched {
         width: calc(100% / 5);
         /* Distribute 100% equally across 7 columns */
         border-right: 1px solid rgb(184, 184, 184);
+        border-bottom: 1px solid white;
         /* Add white vertical divider to right border */
         background-color: black;
     }
@@ -136,30 +137,43 @@
 <div class="sched_container">
     <table class="sched">
         <tbody class="sched">
-            <th>
-                <tr class="sched s_container s_horizontal">
-                    <th class="sched_header s_child">Tuesday</th>
-                    <th class="sched_header s_child">Wednesday</th>
-                    <th class="sched_header s_child">Thursday</th>
-                    <th class="sched_header s_child">Friday</th>
-                    <th class="sched_header s_child">Sat/Sun/Mon</th>
-                </tr>
-            </th>
+            <tr class="sched s_container s_horizontal">
+                <th style="width: 100px;" class="sched_header s_child"></th>
+                <th class="sched_header s_child">Tuesday</th>
+                <th class="sched_header s_child">Wednesday</th>
+                <th class="sched_header s_child">Thursday</th>
+                <th class="sched_header s_child">Friday</th>
+                <th class="sched_header s_child">Sat/Sun/Mon</th>
+            </tr>
             <tr class="sched">
-                <th class="sched"><img
-                        src="https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/schedule/variety.png">
-                </th>
+                <th style="width: 100px;font-size: 2.5cqw; border-bottom: 1px solid white;" class="sched_header s_child">9AM<br>PST</th>
+                <th class="sched"><a href="https://store.steampowered.com/app/1105670/The_Last_Spell/"><img
+                            src="https://lastspell.com/wp-content/uploads/2019/07/TLS_Logo_02_Red-500x316.png"></a></th>
+                <th class="sched"><a href="https://store.steampowered.com/app/1105670/The_Last_Spell/"><img
+                            src="https://lastspell.com/wp-content/uploads/2019/07/TLS_Logo_02_Red-500x316.png"></a></th>
                 <th class="sched"><a href="https://store.steampowered.com/app/1105670/The_Last_Spell/"><img
                             src="https://lastspell.com/wp-content/uploads/2019/07/TLS_Logo_02_Red-500x316.png"></a></th>
                 <th class="sched"><a href="https://store.steampowered.com/app/1940340/Darkest_Dungeon_II/"><img
                             src="https://img2.storyblok.com/fit-in/1536x1229/filters:format(png)/f/127947/427x231/ea387480c8/dd2-logo.png"></a>
                 </th>
-                <th class="sched"><img
-                    src="https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/schedule/variety.png">
-                </th>
-                <th class="sched"><a href=""><img class="image-section__image"
+                <th class="sched" rowspan="2"><a href=""><img class="image-section__image"
                             src="https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/schedule/vacation.png"
                             alt="https://storage.googleapis.com/popshopprod-shop-renderer-assets-q9gk7sc6/themes/assets/c79e23d7-3773-4032-8069-1912691f0518/assets/image-1708832057-image-040d0c95c1b07d46d66ff3b7d8e1b5c7060b91d5bb7f24b56deae13d4e481022.png">
+                </th>
+            </tr>
+            <tr class="sched">
+                <th style="width: 100px;font-size: 2.5cqw" class="sched_header s_child">2PM<br>PST</th>
+                <th class="sched"><img
+                        src="https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/schedule/variety.png">
+                </th>
+                <th class="sched"><img
+                        src="https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/schedule/variety.png">
+                </th>
+                <th class="sched"><img
+                        src="https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/schedule/variety.png">
+                </th>
+                <th class="sched"><img
+                        src="https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/schedule/variety.png">
                 </th>
             </tr>
         </tbody>
