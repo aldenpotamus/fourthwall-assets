@@ -14,6 +14,58 @@
         background-color: lightgrey;
     }
 
+    #missing-perks {
+        border-radius: 15px;
+        position: absolute;
+        color: black;
+        font-weight: bolder;
+        background-color:#1aff00;
+        border: 1px solid black;
+
+        padding: 0px;
+        opacity: 100;
+        z-index: 5;
+
+        filter: drop-shadow(5px 5px 3px black);
+
+        top: calc((var(--curY) - 170) * 1px);
+        left: calc((var(--curX) + 5) * 1px);
+    }
+
+    #missing-perks table {
+        border: none;
+        border-collapse: collapse;
+        width: 500px;
+    }
+
+    #missing-perks td {
+        line-height: normal;
+        width: 33%;
+        vertical-align: baseline;
+        text-align: center;
+        /* border: 1px solid black; */
+        border-right: 1px solid black;
+        font-weight: bolder;
+    }
+
+    #missing-perks td:last-child {
+        border: none;
+    }
+
+    #missing-perks th {
+        line-height: normal;
+        width: 33%;
+        text-decoration: underline;
+        /* text-align: left; */
+        font-weight: bolder;
+        font-size: 1.25em;
+        border-right: 1px solid black;
+    }
+
+    #missing-perks th:last-child {
+        border: none;
+    }
+
     #perk-grid {
         display: flex;
         flex-wrap: wrap;
@@ -249,10 +301,12 @@
 <body>
     <div id="main">
         <h1>BUILD GUIDE</h1>
+        <div id="missing-perks"></div>
         <div><a href="/pages/build-guide-all">Browse Build Guides Here</a></div>
         <canvas id="uploaded-file"></canvas>
         <div style="text-align: center;">Supported resolution heights are 1440 (200% UI), 1080 (175% UI), 720 (100% UI), non-16:9 aspect ratios are experimental.<br>
-        For a sample screenshot to test with, download <a href="https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/build_guide_support/sample.png">this image</a>.</div>
+        For a sample screenshot to test with, download <a href="https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/build_guide_support/sample.png">this image</a>.<br>
+        <a href ="https://forms.gle/2UUt6Jb9KvKQr4C19">Submit your own builds here!</a> or <a href="https://forms.gle/WwBPZTSBUUcXpPoP9">Report an issue here.</a></div>
         <label for="file-upload" class="custom-file-upload">
             Upload Screenshot of Perks Panel
         </label>
@@ -533,6 +587,43 @@
         }
     }
 
+    function buildTable(crit, nice, missing) {
+        const table = document.createElement('table');
+        const headerRow = document.createElement('tr');
+        ['Essential', 'Bonus', 'Missing'].forEach(colName => {
+            const header = document.createElement('th');
+            header.innerHTML = colName;
+            headerRow.appendChild(header);
+        });
+        table.appendChild(headerRow);
+
+        const dataRow = document.createElement('tr');
+        const critDataCell = document.createElement('td');
+        critDataCell.innerHTML = '';
+        crit.forEach(element => {
+            critDataCell.innerHTML += element.innerHTML + '<br>';
+        });
+        dataRow.appendChild(critDataCell);
+
+        const niceDataCell = document.createElement('td');
+        niceDataCell.innerHTML = '';
+        nice.forEach(element => {
+            niceDataCell.innerHTML += element.innerHTML + '<br>';
+        });
+        dataRow.appendChild(niceDataCell);
+
+        const missDataCell = document.createElement('td');
+        missDataCell.innerHTML = '';
+        missing.forEach(element => {
+            missDataCell.innerHTML += element + '<br>';
+        });
+        dataRow.appendChild(missDataCell);
+
+        table.appendChild(dataRow);
+
+        return table;
+    }
+
     function extractDNA(ctx, x, y) {
         imgDNA = ''
         seedPixels.forEach(seedPixel => {   
@@ -752,9 +843,21 @@
                         foundCriticalPerkElements.forEach(element => {
                             element.classList.add('active-critical');
                         })
+
                         foundNiceToHavePerkElements.forEach(element => {
                             element.classList.add('active-nicetohave');
                         })
+
+                        if(!selectedElement) {
+                            var table = buildTable(foundCriticalPerkElements, foundNiceToHavePerkElements, missingPerkElements);
+                            document.getElementById('missing-perks').appendChild(table);
+                        }
+                    });
+
+                    buildButton.addEventListener('mousemove', e => { 
+                        const root = document.querySelector(':root');
+                        root.style.setProperty('--curX', e.pageX);
+                        root.style.setProperty('--curY', e.pageY);
                     });
 
                     buildButton.addEventListener('mouseout', e => {
@@ -762,19 +865,22 @@
                             c.classList.remove('active-critical');
                             c.classList.remove('active-nicetohave');
                         });
+                        document.getElementById('missing-perks').innerHTML = "";
                     });
 
                     buildButton.addEventListener('click', e => {
                         const selected = e.currentTarget.classList.contains('selected');
 
-                        selectedElement = e.currentTarget;
-                        setSizeProps();
-
                         e.currentTarget.closest('#build-options').childNodes.forEach(sib => {
                             sib.querySelector('.build-button').classList.add('not-selected');
                             sib.querySelector('.build-button').classList.remove('selected');
+                            selectedElement = null;
                         })
                         if(!selected) {
+                            selectedElement = e.currentTarget;
+                            setSizeProps();
+                            document.getElementById('missing-perks').innerHTML = "";
+
                             e.currentTarget.classList.add('selected');
                             e.currentTarget.classList.remove('not-selected');
                         }
@@ -783,7 +889,7 @@
                     buildOptions = document.getElementById('build-options');
 
                     buildButtons.push({
-                        matchPct: Math.round(foundNiceToHavePerkElements.length/3*100),
+                        matchPct: parseInt(matchPct.innerHTML),
                         rating: builds[key]['rating'],
                         buildElement: buildButtonPH
                     });
@@ -795,21 +901,21 @@
             if(!buildButtons.length)
                 console.log('NO BUILDS FOUND!');
 
-            buildButtons = buildButtons.sort((item1, item2) => {
-                    if(item1.matchPct > item2.matchPct)
-                        return -1;
-                    if(item1.matchPct == item2.matchPct)
-                        if(item1.rating > item2.rating)
-                            return -1
-                    return 1;
-                });
+            console.log(buildButtons)
+            var buildButtonsSorted = buildButtons.sort((item1, item2) => {
+                if(item1.matchPct != item2.matchPct)
+                    return item2.matchPct - item1.matchPct;
+                if(item1.rating != item2.rating)
+                        return item2.rating - item1.rating;
+                return 0;
+            });
 
-                buildOptions = document.getElementById('build-options');
-                buildOptions.innerHTML = '';
-                buildButtons.forEach(build => {
-                    buildOptions.appendChild(build.buildElement);
-                });
-            }
+            buildOptions = document.getElementById('build-options');
+            buildOptions.innerHTML = '';
+            buildButtonsSorted.forEach(build => {
+                buildOptions.appendChild(build.buildElement);
+            });
+        }
 
         reader.readAsDataURL(selectedFile);
     }

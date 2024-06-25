@@ -173,7 +173,8 @@
 </style>
 <body>
     <div id="main">
-        <h1 style="margin-bottom: 50px;">BUILD LIBRARY</h1>
+        <h1>BUILD LIBRARY</h1>
+        <div style="margin-bottom: 50px;"><a href ="https://forms.gle/2UUt6Jb9KvKQr4C19">Submit your own builds here!</a></div>
         <div id="build-options"></div>
     </div>
 </body>
@@ -183,132 +184,154 @@
     builds = {
         "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/baneful-dodger.png" : {
             name: "Baneful Dodger",
+            abbr: "bd",
             rating: .29,
             critical: ['Adrenaline Rush', 'Septic Shock', 'Poisonous'],
             nicetohave: ['Berserk', 'Blessing', 'Sadist']
         },
         "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/buffer-alchemist.png" : {
             name: "Buffer Alchemist",
+            abbr: "ba",
             rating: .36,
             critical: ['Potion Throw', 'Overload', 'Blessing'],
             nicetohave: ['Warcry', 'Sadist', 'Heart of the Party']
         },
         "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/drunk-assassin.png" : {
             name: "Drunk Assassin",
+            abbr: "da",
             rating: .15,
             critical: ['Critical Runes', 'Legendary Assassin', 'Crippling Punch'],
             nicetohave: ['Mana Growth', 'Overload', 'Longer Weapons']
         },
         "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/explosive-leech-hog.png" : {
             name: "Explosive Leech-Hog",
+            abbr: "rj",
             rating: .75,
             critical: ['Berserk', 'Blood Collector', 'Blood Magic'],
             nicetohave: ['Proximity Shot', 'Critical Master', 'Spiky Counter']
         },
         "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/gun-fu.png" : {
             name: "GUN-FU",
+            abbr: "equi",
             rating: .09,
             critical: ['Crippling Punch', 'Flexibility', 'Adrenaline Rush'],
             nicetohave: ['Relentless', 'Inertia', 'BOOM!']
         },
         "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/health-mage.png" : {
             name: "Healthmage",
+            abbr: "bm",
             rating: .70,
             critical: ['Organic Armor', 'Blood Magic', 'Body Builder'],
             nicetohave: ['Sanguine Fuel', 'Vampire', 'Coagulation']
         },
         "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/hedgehog.png" : {
             name: "Hedgehog",
+            abbr: "hh",
             rating: .85,
             critical: ['Berserk', 'Vampire', 'Blood Magic'],
             nicetohave: ['Spiky Counter', 'Thickness', 'Blink']
         },
         "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/lawn-mower.png" : {
             name: "Lawn Mower",
+            abbr: "lm",
             rating: .5,
             critical: ['BOOM!', 'Contamination', 'Sadist'],
             nicetohave: ['Blessing', 'Bully', "You're Next"]
         },
         "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/market-gardener.png" : {
             name: "Market Gardener",
+            abbr: "mg",
             rating: .3,
             critical: ['Vampire', 'Critical Runes', 'Big Game Hunter'],
             nicetohave: ['Poisonous', 'Berserk', "Glass Cannon"]
         },
         "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/miasma-gorgon.png" : {
             name: "Miasma Gorgon",
+            abbr: "mia",
             rating: .28,
             critical: ['Septic Shock', 'Poisonous', 'Spiky Counter'],
             nicetohave: ['Toxic Leech', 'Sadist', "Contamination"]
         },
         "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/momentum.png" : {
             name: "Momentum",
+            abbr: "m",
             rating: .85,
             critical: ['Inertia', 'Relentless', 'BOOM!'],
             nicetohave: ['Big Game Hunter', 'Proximity Shot', "Flexibility"]
         },
         "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/multi-crit.png" : {
             name: "Multi-Crit",
+            abbr: "mh",
             rating: 1.00,
             critical: ['Critical Master', 'Mana Collector', 'Legendary Assassin'],
             nicetohave: ['Big Game Hunter', 'Carnage', "Glass Cannon"]
         },
         "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/poison-pogate.png" : {
             name: "Poison-pogate",
+            abbr: "p",
             rating: .58,
             critical: ['Potent Toxins', 'Volatile Reactions', 'Contamination'],
             nicetohave: ['Septic Shock', 'Sadist', "Blessing"]
         },
         "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/poison-poker.png" : {
             name: "Poison-Poker",
+            abbr: "pmp",
             rating: .50,
             critical: ['Potent Toxins', 'Epidemic', 'Mana Collector'],
             nicetohave: ['Initiator', 'Thrifty', "Glass Cannon"]
         },
         "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/poison-stunner.png" : {
             name: "Poison Stunner",
+            abbr: "ps",
             rating: .75,
             critical: ['Septic Shock', 'Contamination', 'Hex'],
             nicetohave: ['Stunning', 'Potent Toxins', "Sadist"]
         },
         "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/prop-me-critly.png" : {
             name: "Prop Me Critly",
+            abbr: "pmc",
             rating: .57,
             critical: ['Mana Collector', 'Volatile Reactions', 'Crit Master'],
             nicetohave: ['Heart of the Party', 'Critical Runes', "Thrifty"]
         },
         "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/sanguine-alchemist.png" : {
             name: "Sanguine Alchemist",
+            abbr: "sa",
             rating: .45,
             critical: ['Blood Magic', 'Potion Throw', 'Overload'],
             nicetohave: ['Explosive Hemoglobin', 'Vivified', "Sanguine Fuel"]
         },
         "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/sniper.png" : {
             name: "Sniper",
+            abbr: "sn",
             rating: .27,
             critical: ['Longer Weapons', 'Exploit Weakness', 'Third Eye'],
             nicetohave: ['Legendary Assassin', 'Emergency Tunnel', "Steady Aim"]
         },
         "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/stoutpire.png" : {
             name: "Stoutpire",
+            abbr: "stout",
             rating: .45,
             critical: ['Body Builder', 'Organic Armor', 'Vampire'],
             nicetohave: ['Heart of the Party', 'Initiator', "Overload"]
         },
         "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/stunner.png" : {
             name: "Long Arm of the Stun",
+            abbr: "s",
             rating: .75,
             critical: ['Contamination', 'Longer Weapons', 'Hex'],
             nicetohave: ['Bully', 'Stunning', "Sadist"]
         },
         "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/the-sadist.png" : {
             name: "The Sadist",
+            abbr: "smh",
             rating: 1.0,
             critical: ['Sadist', 'Contamination', 'Blessing'],
             nicetohave: ['Bully', 'Critical Master', "Mana Collector"]
         },
         "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/war-crier.png" : {
             name: "The Town War Crier",
+            abbr: "wc",
             rating: .70,
             critical: ['Warcry', 'Blessing', 'Organic Armor'],
             nicetohave: ['Thickness', 'Coagulation', "Avid Learner"]
@@ -355,6 +378,7 @@
         buildButtonPH.classList.add('build-button-ph');
 
         const buildButton = document.createElement('div');
+        buildButton.id = builds[key]['abbr'];
         buildButton.classList.add('build-button');
         buildButton.classList.add('not-selected');
         buildButtonPH.appendChild(buildButton);
@@ -407,10 +431,21 @@
         });
     });
 
-
     buildOptions = document.getElementById('build-options');
     buildOptions.innerHTML = '';
     buildButtons.forEach(build => {
         buildOptions.appendChild(build.buildElement);
     });
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    if(urlParams.has('build')) {
+        setTimeout(x => {
+            const urlParamElement = document.getElementById(urlParams.get('build'));
+            selectedElement = urlParamElement;
+            urlParamElement.classList.remove('not-selected');    
+            urlParamElement.classList.add('selected');
+            setSizeProps(null);
+        }, 500);
+    }
 </script>
