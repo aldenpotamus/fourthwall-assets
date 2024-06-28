@@ -334,9 +334,57 @@
     .not-selected .watch-button {
         transition: all 0.5s ease-in-out;
     }
+
+    /* Modal */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 30vh; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #cdcdcd;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 20%;
+    }
+
+    /* The Close Button */
+    .close {
+        position: relative;
+        top: -76px;
+        color: #aaaaaa;
+        float: right;
+        font-size: 106px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
 </style>
 <body>
     <div id="main">
+        <div id="fix-perk-modal" class="modal">
+            <div class="modal-content">
+                <h3 style="color: black; margin-top: 0px;" >Choose correct perk:</h3>
+                <span id="modal-dismiss" class="close">&times;</span>
+                <div class="modal-selector"></div>
+            </div>
+        </div>
         <h1>BUILD GUIDE</h1>
         <div id="missing-perks"></div>
         <div><a href="/pages/build-guide-all">Browse Build Guides Here</a></div>
@@ -382,6 +430,10 @@
             width: 1280
         }
     }
+
+    document.getElementById('modal-dismiss').addEventListener('click', e => {
+        document.getElementById('fix-perk-modal').style.display = "none";
+    });
 
     function buildTable(crit, nice, missing) {
         const table = document.createElement('table');
@@ -489,7 +541,7 @@
     function identifyPerk(ctx, x, y) {
         var dna = extractDNA(ctx, x, y);
         
-        // var options = []
+        var options = [];
 
         var perk = null;
         var minDistance = 10000;
@@ -497,7 +549,7 @@
 
         Object.keys(perks_dna).forEach(dnaKey => {
             var distance = getEditDistance(dna, dnaKey);
-            // options.push({'name': perks_dna[dnaKey], 'dist': distance})
+            options.push({'name': perks_dna[dnaKey], 'dist': distance})
 
             if(minDistance > distance) {
                 secondBest = minDistance;
@@ -506,11 +558,11 @@
             }
         });
 
-        // console.log(options.sort((item1, item2) => {
-        //     return item1.dist - item2.dist;
-        // }));
+        options = options.sort((item1, item2) => {
+            return item1.dist - item2.dist;
+        });
 
-        return perk;    
+        return [perk, options.map((x) => x.name).join(',')];    
     }
 
     function setSizeProps(event) {
@@ -581,17 +633,41 @@
                 // var row = document.createElement('div');
                 // perkGrid.appendChild(row);
                 for(var x = 0; x < 8; x++) {
-                    var perk = identifyPerk(ctx, x, y);
+                    var result = identifyPerk(ctx, x, y);
+                    var perk = result[0];
+                    var options = result[1];
+
                     var cell = document.createElement('div');
                     cell.id = perk;
                     cell.innerHTML = perk;
+                    cell.setAttribute('options', options);
                     cell.classList.add('perk');
                     perkGrid.appendChild(cell);
                     cell.addEventListener('click', e => {
-                        var perk = prompt('Replace this perk with: ');
-                        e.target.id = perk;
-                        e.target.innerHTML = perk;
-                        displayBuildOptions();
+                        document.getElementById('fix-perk-modal').style.display = "block";
+                        const modalContent = document.getElementById('fix-perk-modal').querySelector(".modal-selector");
+                        modalContent.innerHTML = '';
+                        const datalist = document.createElement('datalist');
+                        datalist.id = "modal-datalist";
+                        e.target.getAttribute('options').split(',').forEach(key => {
+                            var option = document.createElement('option');
+                            option.value  = key;
+                            datalist.appendChild(option);
+                        })
+                        const input = document.createElement('input');
+                        input.setAttribute('list', 'modal-datalist');
+                        input.setAttribute('to-change', e.target.id);
+                        input.addEventListener('change', event => {
+                            var updateTarget = document.getElementById(event.target.getAttribute('to-change'));
+                            updateTarget.id = event.target.value;
+                            updateTarget.innerHTML = event.target.value;
+                            document.getElementById('fix-perk-modal').style.display = "none";
+                            displayBuildOptions();
+                        });
+
+                        modalContent.appendChild(input);
+                        modalContent.appendChild(datalist);
+                        input.focus();
                     });
                 } 
             }
@@ -743,7 +819,6 @@
         if(!buildButtons.length)
             console.log('NO BUILDS FOUND!');
 
-        console.log(buildButtons)
         var buildButtonsSorted = buildButtons.sort((item1, item2) => {
             if(item1.matchPct != item2.matchPct)
                 return item2.matchPct - item1.matchPct;
