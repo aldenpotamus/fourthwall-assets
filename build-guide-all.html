@@ -218,303 +218,126 @@
 <script>  
     selectedElement = null;
 
-    builds = {
-        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/baneful-dodger.png" : {
-            name: "Baneful Dodger",
-            abbr: "bd",
-            rating: .29,
-            vlink: "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=5637",
-            critical: ['Adrenaline Rush', 'Septic Shock', 'Poisonous'],
-            nicetohave: ['Berserk', 'Blessing', 'Sadist']
-        },
-        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/buffer-alchemist.png" : {
-            name: "Buffer Alchemist",
-            abbr: "ba",
-            rating: .36,
-            vlink: "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=1057",
-            critical: ['Potion Throw', 'Overload', 'Blessing'],
-            nicetohave: ['Warcry', 'Sadist', 'Heart of the Party']
-        },
-        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/drunk-assassin.png" : {
-            name: "Drunk Assassin",
-            abbr: "da",
-            rating: .15,
-            vlink: "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=1289",
-            critical: ['Critical Runes', 'Legendary Assassin', 'Crippling Punch'],
-            nicetohave: ['Mana Growth', 'Overload', 'Longer Weapons']
-        },
-        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/explosive-leech-hog.png" : {
-            name: "Explosive Leech-Hog",
-            abbr: "rj",
-            rating: .75,
-            vlink: "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=1454",
-            critical: ['Berserk', 'Blood Collector', 'Blood Magic'],
-            nicetohave: ['Proximity Shot', 'Critical Master', 'Spiky Counter']
-        },
-        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/gun-fu.png" : {
-            name: "GUN-FU",
-            abbr: "equi",
-            rating: .09,
-            vlink: "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=1730",
-            critical: ['Crippling Punch', 'Flexibility', 'Adrenaline Rush'],
-            nicetohave: ['Relentless', 'Inertia', 'BOOM!']
-        },
-        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/health-mage.png" : {
-            name: "Healthmage",
-            abbr: "bm",
-            rating: .70,
-            vlink: "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=1909",
-            critical: ['Organic Armor', 'Blood Magic', 'Body Builder'],
-            nicetohave: ['Sanguine Fuel', 'Vampire', 'Coagulation']
-        },
-        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/hedgehog.png" : {
-            name: "Hedgehog",
-            abbr: "hh",
-            rating: .85,
-            vlink: "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=2189",
-            critical: ['Berserk', 'Vampire', 'Blood Magic'],
-            nicetohave: ['Spiky Counter', 'Thickness', 'Blink']
-        },
-        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/lawn-mower.png" : {
-            name: "Lawn Mower",
-            abbr: "lm",
-            rating: .5,
-            vlink: "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=3285",
-            critical: ['BOOM!', 'Contamination', 'Sadist'],
-            nicetohave: ['Blessing', 'Bully', "You're Next"]
-        },
-        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/market-gardener.png" : {
-            name: "Market Gardener",
-            abbr: "mg",
-            rating: .3,
-            vlink: "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=2444",
-            critical: ['Vampire', 'Critical Runes', 'Big Game Hunter'],
-            nicetohave: ['Poisonous', 'Berserk', "Glass Cannon"]
-        },
-        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/miasma-gorgon.png" : {
-            name: "Miasma Gorgon",
-            abbr: "mia",
-            rating: .28,
-            vlink: "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=2856",
-            critical: ['Septic Shock', 'Poisonous', 'Spiky Counter'],
-            nicetohave: ['Toxic Leech', 'Sadist', "Contamination"]
-        },
-        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/momentum.png" : {
-            name: "Momentum",
-            abbr: "m",
-            rating: .85,
-            vlink: "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=2669",
-            critical: ['Inertia', 'Relentless', 'BOOM!'],
-            nicetohave: ['Big Game Hunter', 'Proximity Shot', "Flexibility"]
-        },
-        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/multi-crit.png" : {
-            name: "Multi-Crit",
-            abbr: "mh",
-            rating: 1.00,
-            vlink: "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=3070",
-            critical: ['Critical Master', 'Mana Collector', 'Legendary Assassin'],
-            nicetohave: ['Big Game Hunter', 'Carnage', "Glass Cannon"]
-        },
-        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/poison-pogate.png" : {
-            name: "Poison-pogate",
-            abbr: "p",
-            rating: .58,
-            vlink: "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=3736",
-            critical: ['Potent Toxins', 'Volatile Reactions', 'Contamination'],
-            nicetohave: ['Septic Shock', 'Sadist', "Blessing"]
-        },
-        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/poison-poker.png" : {
-            name: "Poison-Poker",
-            abbr: "pmp",
-            rating: .50,
-            vlink: "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=5796",
-            critical: ['Potent Toxins', 'Epidemic', 'Mana Collector'],
-            nicetohave: ['Initiator', 'Thrifty', "Glass Cannon"]
-        },
-        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/poison-stunner.png" : {
-            name: "Poison Stunner",
-            abbr: "ps",
-            rating: .75,
-            vlink: "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=3478",
-            critical: ['Septic Shock', 'Contamination', 'Hex'],
-            nicetohave: ['Stunning', 'Potent Toxins', "Sadist"]
-        },
-        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/prop-me-critly.png" : {
-            name: "Prop Me Critly",
-            abbr: "pmc",
-            rating: .57,
-            vlink: "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=3982",
-            critical: ['Mana Collector', 'Volatile Reactions', 'Crit Master'],
-            nicetohave: ['Heart of the Party', 'Critical Runes', "Thrifty"]
-        },
-        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/sanguine-alchemist.png" : {
-            name: "Sanguine Alchemist",
-            abbr: "sa",
-            rating: .45,
-            vlink: "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=4225",
-            critical: ['Blood Magic', 'Potion Throw', 'Overload'],
-            nicetohave: ['Explosive Hemoglobin', 'Vivified', "Sanguine Fuel"]
-        },
-        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/sniper.png" : {
-            name: "Sniper",
-            abbr: "sn",
-            rating: .27,
-            vlink: "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=4473",
-            critical: ['Longer Weapons', 'Exploit Weakness', 'Third Eye'],
-            nicetohave: ['Legendary Assassin', 'Emergency Tunnel', "Steady Aim"]
-        },
-        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/stoutpire.png" : {
-            name: "Stoutpire",
-            abbr: "stout",
-            rating: .45,
-            vlink: "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=4690",
-            critical: ['Body Builder', 'Organic Armor', 'Vampire'],
-            nicetohave: ['Heart of the Party', 'Initiator', "Overload"]
-        },
-        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/stunner.png" : {
-            name: "Long Arm of the Stun",
-            abbr: "s",
-            rating: .75,
-            vlink: "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=4912",
-            critical: ['Contamination', 'Longer Weapons', 'Hex'],
-            nicetohave: ['Bully', 'Stunning', "Sadist"]
-        },
-        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/the-sadist.png" : {
-            name: "The Sadist",
-            abbr: "smh",
-            rating: 1.0,
-            vlink: "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=5169",
-            critical: ['Sadist', 'Contamination', 'Blessing'],
-            nicetohave: ['Bully', 'Critical Master', "Mana Collector"]
-        },
-        "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/war-crier.png" : {
-            name: "The Town War Crier",
-            abbr: "wc",
-            rating: .70,
-            vlink: "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=5423",
-            critical: ['Warcry', 'Blessing', 'Organic Armor'],
-            nicetohave: ['Thickness', 'Coagulation', "Avid Learner"]
-        }
-    }
+    fetch('./build-defs.json').then((response) => response.json()).then((json) => { builds = json; }).then(e => {
+        buildButtons = [];
 
-    buildButtons = [];
+        function setSizeProps(event) {
+            if(selectedElement) {
+                var root = document.querySelector(':root');
+                root.style.setProperty('--startY', selectedElement.offsetTop);
+                root.style.setProperty('--startX', selectedElement.offsetLeft);
+        
+                var objectSize = 250;
+                
+                var winHeight = window.innerHeight;
+                var winScrollY = window.scrollY;
+                var yMidpoint = (winHeight / 2) + winScrollY - (objectSize / 2) - (winHeight * .10);
+                
+                var winWidth = window.innerWidth;
+                var winScrollX = window.scrollX;
+                var xMidpoint = (winWidth / 2) + winScrollX - (objectSize / 2);
+        
+                console.log("Height: "+winHeight+" Scroll: "+winScrollY+" Object Size: "+objectSize+" Final: "+yMidpoint);
+                console.log("Width: "+winWidth+" Scroll: "+winScrollX+" Object Size: "+objectSize+" Final: "+xMidpoint);
+        
+                root.style.setProperty('--destY', yMidpoint);
+                root.style.setProperty('--destX', xMidpoint);
 
-    function setSizeProps(event) {
-        if(selectedElement) {
-            var root = document.querySelector(':root');
-            root.style.setProperty('--startY', selectedElement.offsetTop);
-            root.style.setProperty('--startX', selectedElement.offsetLeft);
-    
-            var objectSize = 250;
-            
-            var winHeight = window.innerHeight;
-            var winScrollY = window.scrollY;
-            var yMidpoint = (winHeight / 2) + winScrollY - (objectSize / 2) - (winHeight * .10);
-            
-            var winWidth = window.innerWidth;
-            var winScrollX = window.scrollX;
-            var xMidpoint = (winWidth / 2) + winScrollX - (objectSize / 2);
-    
-            console.log("Height: "+winHeight+" Scroll: "+winScrollY+" Object Size: "+objectSize+" Final: "+yMidpoint);
-            console.log("Width: "+winWidth+" Scroll: "+winScrollX+" Object Size: "+objectSize+" Final: "+xMidpoint);
-    
-            root.style.setProperty('--destY', yMidpoint);
-            root.style.setProperty('--destX', xMidpoint);
-
-            root.style.setProperty('--scale', Math.min(winHeight, winWidth) / 350);
-        }
-    }
-
-    window.addEventListener("resize", setSizeProps);
-    window.addEventListener("scroll", setSizeProps);
-
-    window.onload = (event) => {
-        window.dispatchEvent(new Event('resize'));
-    };
-
-    Object.keys(builds).forEach(key => {
-        const buildButtonPH = document.createElement('div');
-        buildButtonPH.classList.add('build-button-ph');
-
-        const buildButton = document.createElement('div');
-        buildButton.id = builds[key]['abbr'];
-        buildButton.classList.add('build-button');
-        buildButton.classList.add('not-selected');
-        buildButtonPH.appendChild(buildButton);
-
-        const ratingPct = document.createElement('div');
-        ratingPct.classList.add('rating-decorator');
-        const rating = document.createElement('div');
-        rating.classList.add('rating');
-        rating.style = "--pct: "+builds[key]['rating'];
-        const ratingScoreImg = new Image();
-        ratingScoreImg.src = 'https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/build_guide_support/ratings.png';
-        rating.appendChild(ratingScoreImg);
-        ratingPct.appendChild(rating);
-        const ratingImg = new Image();
-        ratingImg.src = 'https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/build_guide_support/rating-frame.png';
-        ratingPct.append(ratingImg);
-
-        const buildNameplatePH = document.createElement('div');
-        buildNameplatePH.classList.add('build-nameplate-ph');
-        const buildnameDiv = document.createElement('div');
-        buildnameDiv.classList.add('build-nameplate');
-        buildnameDiv.innerHTML = builds[key]['name'];
-        buildNameplatePH.appendChild(buildnameDiv);
-
-        const buildVideoButton = document.createElement('div');
-        buildVideoButton.classList.add('watch-button');
-        const buildVideoIcon = document.createElement('div');
-        buildVideoIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z"/></svg>';
-        const buildVideoLink = document.createElement('a');
-        buildVideoLink.setAttribute('href', builds[key]['vlink']);
-        buildVideoButton.appendChild(buildVideoLink);
-        buildVideoLink.appendChild(buildVideoIcon);
-
-        var i = new Image();
-        i.src = key;
-        buildButton.appendChild(i);
-        buildButton.appendChild(ratingPct);
-        buildButton.appendChild(buildNameplatePH);
-        buildButton.appendChild(buildVideoButton);
-
-        buildButton.addEventListener('click', e => {
-            const selected = e.currentTarget.classList.contains('selected');
-
-            selectedElement = e.currentTarget;
-            setSizeProps();
-
-            e.currentTarget.closest('#build-options').childNodes.forEach(sib => {
-                sib.querySelector('.build-button').classList.add('not-selected');
-                sib.querySelector('.build-button').classList.remove('selected');
-            })
-            if(!selected) {
-                e.currentTarget.classList.add('selected');
-                e.currentTarget.classList.remove('not-selected');
+                root.style.setProperty('--scale', Math.min(winHeight, winWidth) / 350);
             }
+        }
+
+        window.addEventListener("resize", setSizeProps);
+        window.addEventListener("scroll", setSizeProps);
+
+        window.onload = (event) => {
+            window.dispatchEvent(new Event('resize'));
+        };
+
+        Object.keys(builds).forEach(key => {
+            const buildButtonPH = document.createElement('div');
+            buildButtonPH.classList.add('build-button-ph');
+
+            const buildButton = document.createElement('div');
+            buildButton.id = builds[key]['abbr'];
+            buildButton.classList.add('build-button');
+            buildButton.classList.add('not-selected');
+            buildButtonPH.appendChild(buildButton);
+
+            const ratingPct = document.createElement('div');
+            ratingPct.classList.add('rating-decorator');
+            const rating = document.createElement('div');
+            rating.classList.add('rating');
+            rating.style = "--pct: "+builds[key]['rating'];
+            const ratingScoreImg = new Image();
+            ratingScoreImg.src = 'https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/build_guide_support/ratings.png';
+            rating.appendChild(ratingScoreImg);
+            ratingPct.appendChild(rating);
+            const ratingImg = new Image();
+            ratingImg.src = 'https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/build_guide_support/rating-frame.png';
+            ratingPct.append(ratingImg);
+
+            const buildNameplatePH = document.createElement('div');
+            buildNameplatePH.classList.add('build-nameplate-ph');
+            const buildnameDiv = document.createElement('div');
+            buildnameDiv.classList.add('build-nameplate');
+            buildnameDiv.innerHTML = builds[key]['name'];
+            buildNameplatePH.appendChild(buildnameDiv);
+
+            const buildVideoButton = document.createElement('div');
+            buildVideoButton.classList.add('watch-button');
+            const buildVideoIcon = document.createElement('div');
+            buildVideoIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z"/></svg>';
+            const buildVideoLink = document.createElement('a');
+            buildVideoLink.setAttribute('href', builds[key]['vlink']);
+            buildVideoButton.appendChild(buildVideoLink);
+            buildVideoLink.appendChild(buildVideoIcon);
+
+            var i = new Image();
+            i.src = key;
+            buildButton.appendChild(i);
+            buildButton.appendChild(ratingPct);
+            buildButton.appendChild(buildNameplatePH);
+            buildButton.appendChild(buildVideoButton);
+
+            buildButton.addEventListener('click', e => {
+                const selected = e.currentTarget.classList.contains('selected');
+
+                selectedElement = e.currentTarget;
+                setSizeProps();
+
+                e.currentTarget.closest('#build-options').childNodes.forEach(sib => {
+                    sib.querySelector('.build-button').classList.add('not-selected');
+                    sib.querySelector('.build-button').classList.remove('selected');
+                })
+                if(!selected) {
+                    e.currentTarget.classList.add('selected');
+                    e.currentTarget.classList.remove('not-selected');
+                }
+            });
+
+            buildButtons.push({
+                rating: builds[key]['rating'],
+                buildElement: buildButtonPH
+            });
         });
 
-        buildButtons.push({
-            rating: builds[key]['rating'],
-            buildElement: buildButtonPH
+        buildOptions = document.getElementById('build-options');
+        buildOptions.innerHTML = '';
+        buildButtons.forEach(build => {
+            buildOptions.appendChild(build.buildElement);
         });
-    });
 
-    buildOptions = document.getElementById('build-options');
-    buildOptions.innerHTML = '';
-    buildButtons.forEach(build => {
-        buildOptions.appendChild(build.buildElement);
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        if(urlParams.has('build')) {
+            setTimeout(x => {
+                const urlParamElement = document.getElementById(urlParams.get('build'));
+                selectedElement = urlParamElement;
+                urlParamElement.classList.remove('not-selected');    
+                urlParamElement.classList.add('selected');
+                setSizeProps(null);
+            }, 500);
+        }
     });
-
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    if(urlParams.has('build')) {
-        setTimeout(x => {
-            const urlParamElement = document.getElementById(urlParams.get('build'));
-            selectedElement = urlParamElement;
-            urlParamElement.classList.remove('not-selected');    
-            urlParamElement.classList.add('selected');
-            setSizeProps(null);
-        }, 500);
-    }
 </script>

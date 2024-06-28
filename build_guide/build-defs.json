@@ -1,0 +1,178 @@
+{
+    "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/baneful-dodger.png" : {
+        "name": "Baneful Dodger",
+        "abbr": "bd",
+        "rating": 0.29,
+        "vlink": "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=5637",
+        "critical": ["Adrenaline Rush", "Septic Shock", "Poisonous"],
+        "nicetohave": ["Berserk", "Blessing", "Sadist"]
+    },
+    "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/buffer-alchemist.png" : {
+        "name": "Buffer Alchemist",
+        "abbr": "ba",
+        "rating": 0.36,
+        "vlink": "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=1057",
+        "critical": ["Potion Throw", "Overload", "Blessing"],
+        "nicetohave": ["Warcry", "Sadist", "Heart of the Party"]
+    },
+    "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/drunk-assassin.png" : {
+        "name": "Drunk Assassin",
+        "abbr": "da",
+        "rating": 0.15,
+        "vlink": "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=1289",
+        "critical": ["Critical Runes", "Legendary Assassin", "Crippling Punch"],
+        "nicetohave": ["Mana Growth", "Overload", "Longer Weapons"]
+    },
+    "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/explosive-leech-hog.png" : {
+        "name": "Explosive Leech-Hog",
+        "abbr": "rj",
+        "rating": 0.75,
+        "vlink": "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=1454",
+        "critical": ["Berserk", "Blood Collector", "Blood Magic"],
+        "nicetohave": ["Proximity Shot", "Critical Master", "Spiky Counter"]
+    },
+    "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/gun-fu.png" : {
+        "name": "GUN-FU",
+        "abbr": "equi",
+        "rating": 0.09,
+        "vlink": "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=1730",
+        "critical": ["Crippling Punch", "Flexibility", "Adrenaline Rush"],
+        "nicetohave": ["Relentless", "Inertia", "BOOM!"]
+    },
+    "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/health-mage.png" : {
+        "name": "Healthmage",
+        "abbr": "bm",
+        "rating": 0.70,
+        "vlink": "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=1909",
+        "critical": ["Organic Armor", "Blood Magic", "Body Builder"],
+        "nicetohave": ["Sanguine Fuel", "Vampire", "Coagulation"]
+    },
+    "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/hedgehog.png" : {
+        "name": "Hedgehog",
+        "abbr": "hh",
+        "rating": 0.85,
+        "vlink": "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=2189",
+        "critical": ["Berserk", "Vampire", "Blood Magic"],
+        "nicetohave": ["Spiky Counter", "Thickness", "Blink"]
+    },
+    "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/lawn-mower.png" : {
+        "name": "Lawn Mower",
+        "abbr": "lm",
+        "rating": 0.5,
+        "vlink": "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=3285",
+        "critical": ["BOOM!", "Contamination", "Sadist"],
+        "nicetohave": ["Blessing", "Bully", "You're Next"]
+    },
+    "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/market-gardener.png" : {
+        "name": "Market Gardener",
+        "abbr": "mg",
+        "rating": 0.3,
+        "vlink": "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=2444",
+        "critical": ["Vampire", "Critical Runes", "Big Game Hunter"],
+        "nicetohave": ["Poisonous", "Berserk", "Glass Cannon"]
+    },
+    "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/miasma-gorgon.png" : {
+        "name": "Miasma Gorgon",
+        "abbr": "mia",
+        "rating": 0.28,
+        "vlink": "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=2856",
+        "critical": ["Septic Shock", "Poisonous", "Spiky Counter"],
+        "nicetohave": ["Toxic Leech", "Sadist", "Contamination"]
+    },
+    "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/momentum.png" : {
+        "name": "Momentum",
+        "abbr": "m",
+        "rating": 0.85,
+        "vlink": "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=2669",
+        "critical": ["Inertia", "Relentless", "BOOM!"],
+        "nicetohave": ["Big Game Hunter", "Proximity Shot", "Flexibility"]
+    },
+    "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/multi-crit.png" : {
+        "name": "Multi-Crit",
+        "abbr": "mh",
+        "rating": 1.00,
+        "vlink": "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=3070",
+        "critical": ["Critical Master", "Mana Collector", "Legendary Assassin"],
+        "nicetohave": ["Big Game Hunter", "Carnage", "Glass Cannon"]
+    },
+    "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/poison-pogate.png" : {
+        "name": "Poison-pogate",
+        "abbr": "p",
+        "rating": 0.58,
+        "vlink": "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=3736",
+        "critical": ["Potent Toxins", "Volatile Reactions", "Contamination"],
+        "nicetohave": ["Septic Shock", "Sadist", "Blessing"]
+    },
+    "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/poison-poker.png" : {
+        "name": "Poison-Poker",
+        "abbr": "pmp",
+        "rating": 0.50,
+        "vlink": "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=5796",
+        "critical": ["Potent Toxins", "Epidemic", "Mana Collector"],
+        "nicetohave": ["Initiator", "Thrifty", "Glass Cannon"]
+    },
+    "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/poison-stunner.png" : {
+        "name": "Poison Stunner",
+        "abbr": "ps",
+        "rating": 0.75,
+        "vlink": "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=3478",
+        "critical": ["Septic Shock", "Contamination", "Hex"],
+        "nicetohave": ["Stunning", "Potent Toxins", "Sadist"]
+    },
+    "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/prop-me-critly.png" : {
+        "name": "Prop Me Critly",
+        "abbr": "pmc",
+        "rating": 0.57,
+        "vlink": "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=3982",
+        "critical": ["Mana Collector", "Volatile Reactions", "Crit Master"],
+        "nicetohave": ["Heart of the Party", "Critical Runes", "Thrifty"]
+    },
+    "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/sanguine-alchemist.png" : {
+        "name": "Sanguine Alchemist",
+        "abbr": "sa",
+        "rating": 0.45,
+        "vlink": "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=4225",
+        "critical": ["Blood Magic", "Potion Throw", "Overload"],
+        "nicetohave": ["Explosive Hemoglobin", "Vivified", "Sanguine Fuel"]
+    },
+    "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/sniper.png" : {
+        "name": "Sniper",
+        "abbr": "sn",
+        "rating": 0.27,
+        "vlink": "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=4473",
+        "critical": ["Longer Weapons", "Exploit Weakness", "Third Eye"],
+        "nicetohave": ["Legendary Assassin", "Emergency Tunnel", "Steady Aim"]
+    },
+    "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/stoutpire.png" : {
+        "name": "Stoutpire",
+        "abbr": "stout",
+        "rating": 0.45,
+        "vlink": "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=4690",
+        "critical": ["Body Builder", "Organic Armor", "Vampire"],
+        "nicetohave": ["Heart of the Party", "Initiator", "Overload"]
+    },
+    "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/stunner.png" : {
+        "name": "Long Arm of the Stun",
+        "abbr": "s",
+        "rating": 0.75,
+        "vlink": "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=4912",
+        "critical": ["Contamination", "Longer Weapons", "Hex"],
+        "nicetohave": ["Bully", "Stunning", "Sadist"]
+    },
+    "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/the-sadist.png" : {
+        "name": "The Sadist",
+        "abbr": "smh",
+        "rating": 1.0,
+        "vlink": "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=5169",
+        "critical": ["Sadist", "Contamination", "Blessing"],
+        "nicetohave": ["Bully", "Critical Master", "Mana Collector"]
+    },
+    "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/war-crier.png" : {
+        "name": "The Town War Crier",
+        "abbr": "wc",
+        "rating": 0.70,
+        "vlink": "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=5423",
+        "critical": ["Warcry", "Blessing", "Organic Armor"],
+        "nicetohave": ["Thickness", "Coagulation", "Avid Learner"]
+    }
+}
