@@ -477,14 +477,22 @@
         seedPixels.forEach(seedPixel => {   
             imgPixel = getPerkPixel(ctx, x, y, seedPixel[0], seedPixel[1])
 
-            if(imgPixel.red > imgPixel.blue && imgPixel.red > imgPixel.green) {
+            if(imgPixel.red > imgPixel.green && imgPixel.red > imgPixel.blue) {
                imgDNA += 'R'
-            } else if((imgPixel.red > imgPixel.blue && imgPixel.red < imgPixel.green) || (imgPixel.red < imgPixel.blue && imgPixel.red > imgPixel.green)) {
+            } else if((imgPixel.red > imgPixel.green && imgPixel.red < imgPixel.blue) || (imgPixel.red < imgPixel.green && imgPixel.red > imgPixel.blue)) {
                 imgDNA += 'r'
             } else {
                 imgDNA += 'X'
             }
-            
+
+            if(imgPixel.green > imgPixel.red && imgPixel.green > imgPixel.blue) {
+                imgDNA += 'G'
+            } else if((imgPixel.green > imgPixel.red && imgPixel.green < imgPixel.blue) || (imgPixel.green < imgPixel.red && imgPixel.green > imgPixel.blue)) {
+                imgDNA += 'g'
+            } else {
+                imgDNA += 'X'
+            }
+
             if(imgPixel.blue > imgPixel.red && imgPixel.blue > imgPixel.green) {
                 imgDNA += 'B'
             } else if((imgPixel.blue > imgPixel.red && imgPixel.blue < imgPixel.green) || (imgPixel.blue < imgPixel.red && imgPixel.blue > imgPixel.green)) {
@@ -493,15 +501,7 @@
                 imgDNA += 'X'
             }
             
-            if(imgPixel.green > imgPixel.red && imgPixel.green > imgPixel.blue) {
-                imgDNA += 'G'
-            } else if((imgPixel.green > imgPixel.red && imgPixel.green < imgPixel.blue) || (imgPixel.green < imgPixel.red && imgPixel.green > imgPixel.blue)) {
-                imgDNA += 'g'
-            } else {
-                imgDNA += 'X'
-            }
-            
-            if(imgPixel.red == imgPixel.blue == imgPixel.green <= 30) {
+            if(imgPixel.red == imgPixel.green == imgPixel.blue <= 30) {
                 imgDNA += '*'
             } else if(imgPixel.red == imgPixel.blue == imgPixel.green) {
                 imgDNA += '='
@@ -510,7 +510,7 @@
             }
         });
 
-        // console.log(imgDNA);
+        console.log(imgDNA);
         return imgDNA;
     }
 
@@ -561,6 +561,8 @@
         options = options.sort((item1, item2) => {
             return item1.dist - item2.dist;
         });
+
+        console.log(options);
 
         return [perk, options.map((x) => x.name).join(',')];    
     }

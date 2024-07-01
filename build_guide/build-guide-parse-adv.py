@@ -13,18 +13,18 @@ if(imgPixel.red > imgPixel.blue && imgPixel.red > imgPixel.green) {
     imgDNA += 'X'
 }
 
-if(imgPixel.blue > imgPixel.red && imgPixel.blue > imgPixel.green) {
-    imgDNA += 'B'
-} else if((imgPixel.blue > imgPixel.red && imgPixel.blue < imgPixel.green) || (imgPixel.blue < imgPixel.red && imgPixel.blue > imgPixel.green)) {
-    imgDNA += 'b'
-} else {
-    imgDNA += 'X'
-}
-
 if(imgPixel.green > imgPixel.red && imgPixel.green > imgPixel.blue) {
     imgDNA += 'G'
 } else if((imgPixel.green > imgPixel.red && imgPixel.green < imgPixel.blue) || (imgPixel.green < imgPixel.red && imgPixel.green > imgPixel.blue)) {
     imgDNA += 'g'
+} else {
+    imgDNA += 'X'
+}
+
+if(imgPixel.blue > imgPixel.red && imgPixel.blue > imgPixel.green) {
+    imgDNA += 'B'
+} else if((imgPixel.blue > imgPixel.red && imgPixel.blue < imgPixel.green) || (imgPixel.blue < imgPixel.red && imgPixel.blue > imgPixel.green)) {
+    imgDNA += 'b'
 } else {
     imgDNA += 'X'
 }
@@ -39,42 +39,50 @@ if(imgPixel.red == imgPixel.blue == imgPixel.green <= 30) {
 '''
 
 import json
-f = open('./build-seed-pixels.json')
+f = open('./build_guide/build-seed-pixels.json')
 brutePixels = json.load(f)
 
 def getPixel(img, pixel):
-    return img.getdata()[img.width*pixel[1]+pixel[0]]
+    data = img.getdata()[img.width*pixel[1]+pixel[0]]
+    # This doesn't make sense, should be 0, 1, 2, 3...
+    pixel = {
+        "red": data[0],
+        "green": data[2],
+        "blue": data[1],
+        "alpha": data[3]
+    }
+    return pixel
 
 def extractDNA(img, seedPixels):
     imgDNA = ''
     for pixelToGet in seedPixels:
         pixelToGet = (int(pixelToGet[0]/2), int(pixelToGet[1]/2))
-        imgPixel = getPixel(img, pixelToGet)[0:3]
+        imgPixel = getPixel(img, pixelToGet)
         
-        if imgPixel[0] > imgPixel[1] and imgPixel[0] > imgPixel[2]:
+        if imgPixel['red'] > imgPixel['green'] and imgPixel['red'] > imgPixel['blue']:
             imgDNA += 'R'
-        elif (imgPixel[0] > imgPixel[1] and imgPixel[0] < imgPixel[2]) or (imgPixel[0] < imgPixel[1] and imgPixel[0] > imgPixel[2]):
+        elif (imgPixel['red'] > imgPixel['green'] and imgPixel['red'] < imgPixel['blue']) or (imgPixel['red'] < imgPixel['green'] and imgPixel['red'] > imgPixel['blue']):
             imgDNA += 'r'
         else:
             imgDNA += 'X'
         
-        if imgPixel[1] > imgPixel[0] and imgPixel[1] > imgPixel[2]:
+        if imgPixel['green'] > imgPixel['red'] and imgPixel['green'] > imgPixel['blue']:
+            imgDNA += 'G'
+        elif (imgPixel['green'] > imgPixel['red'] and imgPixel['green'] < imgPixel['blue']) or (imgPixel['green'] < imgPixel['red'] and imgPixel['green'] > imgPixel['blue']):
+            imgDNA += 'g'
+        else:
+            imgDNA += 'X'
+
+        if imgPixel['blue'] > imgPixel['red'] and imgPixel['blue'] > imgPixel['green']:
             imgDNA += 'B'
-        elif (imgPixel[1] > imgPixel[0] and imgPixel[1] < imgPixel[2]) or (imgPixel[1] < imgPixel[0] and imgPixel[1] > imgPixel[2]):
+        elif (imgPixel['blue'] > imgPixel['red'] and imgPixel['blue'] < imgPixel['green']) or (imgPixel['blue'] < imgPixel['red'] and imgPixel['blue'] > imgPixel['green']):
             imgDNA += 'b'
         else:
             imgDNA += 'X'
         
-        if imgPixel[2] > imgPixel[0] and imgPixel[2] > imgPixel[1]:
-            imgDNA += 'G'
-        elif (imgPixel[2] > imgPixel[0] and imgPixel[2] < imgPixel[1]) or (imgPixel[2] < imgPixel[0] and imgPixel[2] > imgPixel[1]):
-            imgDNA += 'g'
-        else:
-            imgDNA += 'X'
-        
-        if imgPixel[0] == imgPixel[1] == imgPixel[2] <= 30:
+        if imgPixel['red'] == imgPixel['green'] == imgPixel['blue'] <= 30:
             imgDNA += '*'
-        elif imgPixel[0] == imgPixel[1] == imgPixel[2]:
+        elif imgPixel['red'] == imgPixel['green'] == imgPixel['blue']:
             imgDNA += '='
         else:
             imgDNA += '-'
@@ -95,8 +103,8 @@ def testSeed(imgs, seedPixels):
     return prints
 
 images = []
-for filename in os.listdir("./perks"):
-    image = Image.open(os.path.join("./perks", filename))
+for filename in os.listdir("./build_guide/perks"):
+    image = Image.open(os.path.join("./build_guide/perks", filename))
     images.append(image)
 
 result = testSeed(images, brutePixels)
