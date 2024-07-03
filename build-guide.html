@@ -612,7 +612,7 @@
         imgtag.onload = function() {
             const canvas = document.querySelector('canvas');
             const ctx = canvas.getContext("2d", { willReadFrequently: true });
-
+            
             // Get the image element
             const image = document.getElementById('myimage');
             var imgWidth = image.width;
@@ -620,7 +620,6 @@
             canvas.width = imgWidth;
             canvas.height = imgHeight;
 
-            ctx.drawImage(image, 0, 0, imgWidth, imgHeight);
             if(Object.keys(supportedResolutions).includes(imgHeight.toString())) {
                 imageScaler = imgHeight / 1440;
                 imageShift = (imgWidth - parseInt(supportedResolutions[imgHeight].width))/2;
@@ -628,6 +627,13 @@
                 window.alert('Uploaded image is in a size that can\'t be parse.  Set your system & game resolution height to [1440@200%, 1080@175%, 720@100%].')
                 return;
             }
+            
+            ctx.drawImage(image,
+                          imageShift, 0,                    // Source X / Y
+                          imgWidth-2*imageShift, imgHeight, // Source Width / Height
+                          0, 0,                             // Dest X / Y
+                          canvas.width,                     // Dest Width
+                          canvas.height)                    // Dest Height
 
             const perkGrid = document.getElementById('perk-grid');
             perkGrid.innerHTML = '';
