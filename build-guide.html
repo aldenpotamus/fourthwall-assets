@@ -76,7 +76,7 @@
         left: 448px; */
         top: calc(var(--canvasOffsetTop) * 1px);
         left: calc(var(--canvasOffsetLeft) * 1px);
-        width: 435px;
+        width: 439px;
         height: 285px;
     }
 
@@ -390,8 +390,10 @@
         <div><a href="/pages/build-guide-all">Browse Build Guides Here</a></div>
         <canvas id="uploaded-file"></canvas>
         <div style="text-align: center;">Supported resolution heights are 1440 (200% UI), 1080 (175% UI), 720 (100% UI), non-16:9 aspect ratios are experimental.<br>
+        Add <b>&#x0022?no-strict&#x0022</b> to the URL if using modded perk locations (like random perks).<br>
         For a sample screenshot to test with, download <a href="https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/build_guide_support/sample.png">this image</a>.<br>
         <a href ="https://forms.gle/2UUt6Jb9KvKQr4C19">Submit your own builds here!</a> or <a href="https://forms.gle/WwBPZTSBUUcXpPoP9">Report an issue here.</a></div>
+        
         <label for="file-upload" class="custom-file-upload">
             Upload Screenshot of Perks Panel
         </label>
@@ -407,10 +409,16 @@
     // fetch('./build_guide/build-defs.json').then((response) => response.json()).then((json) => { builds = json; });
     // fetch('./build_guide/build-dna.json').then((response) => response.json()).then((json) => { perks_dna = json; });
     // fetch('./build_guide/build-seed-pixels.json').then((response) => response.json()).then((json) => { seedPixels = json; });
+    // fetch('./build_guide/perk-locations.json').then((response) => response.json()).then((json) => { perkLocations = json; });
 
     fetch('https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/build_guide/build-defs.json').then((response) => response.json()).then((json) => { builds = json; });
     fetch('https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/build_guide/build-dna.json').then((response) => response.json()).then((json) => { perks_dna = json; });
     fetch('https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/build_guide/build-seed-pixels.json').then((response) => response.json()).then((json) => { seedPixels = json; });
+    fetch('https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/build_guide/perk-locations.json').then((response) => response.json()).then((json) => { perkLocations = json; });
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const strict = urlParams.has('no-strict') ? false : true;
 
     var xOffsets = [1160, 1160+136*1, 1160+136*2, 1160+136*3, 1160+136*4, 1160+136*5, 1160+136*6, 1160+136*7]
     var yOffsets = [674, 674+152, 674+152+152, 674+152+152+152, 674+152+152+152+148]
@@ -510,7 +518,7 @@
             }
         });
 
-        console.log(imgDNA);
+        // console.log(imgDNA);
         return imgDNA;
     }
 
@@ -543,28 +551,27 @@
         
         var options = [];
 
-        var perk = null;
-        var minDistance = 10000;
-        var secondBest = 10000;
-
         Object.keys(perks_dna).forEach(dnaKey => {
             var distance = getEditDistance(dna, dnaKey);
             options.push({'name': perks_dna[dnaKey], 'dist': distance})
-
-            if(minDistance > distance) {
-                secondBest = minDistance;
-                minDistance = distance;
-                perk = perks_dna[dnaKey];
-            }
         });
+
+        if(strict) {
+            var newFinalOptions = [];
+            options.forEach(option => {
+                if(perkLocations[option.name].includes(x+","+y))
+                    newFinalOptions.push(option)
+            });
+            options = newFinalOptions;
+        }
 
         options = options.sort((item1, item2) => {
             return item1.dist - item2.dist;
         });
 
-        console.log(options);
+        // console.log(options);
 
-        return [perk, options.map((x) => x.name).join(',')];    
+        return [options[0].name, options.map((x) => x.name).join(',')];    
     }
 
     function setSizeProps(event) {
