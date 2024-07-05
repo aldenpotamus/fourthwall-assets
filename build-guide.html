@@ -380,7 +380,7 @@
     <div id="main">
         <div id="fix-perk-modal" class="modal">
             <div class="modal-content">
-                <h3 style="color: black; margin-top: 0px;" >Choose correct perk:</h3>
+                <h3 style="color: black; margin-top: 0px; font-size: 1.1rem;" >Choose correct perk:</h3>
                 <span id="modal-dismiss" class="close">&times;</span>
                 <div class="modal-selector"></div>
             </div>
@@ -419,6 +419,7 @@
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const strict = urlParams.has('no-strict') ? false : true;
+    const debug = urlParams.has('debug') ? true : false;
 
     var xOffsets = [1160, 1160+136*1, 1160+136*2, 1160+136*3, 1160+136*4, 1160+136*5, 1160+136*6, 1160+136*7]
     var yOffsets = [674, 674+152, 674+152+152, 674+152+152+152, 674+152+152+152+148]
@@ -518,17 +519,23 @@
             }
         });
 
-        // console.log(imgDNA);
+        if(debug)
+            console.log(imgDNA);
+
         return imgDNA;
     }
 
     var imageScaler = 1;
     var imageShift = 0;
-    function getPerkPixel(ctx, x, y, xSeed, ySeed) {
-        pixelData = ctx.getImageData((xOffsets[x]+xSeed)*imageScaler+imageShift, (yOffsets[y]+ySeed)*imageScaler, 1, 1);
-
-        // ctx.fillStyle = "rgba("+0+","+255+","+0+","+(30/255)+")";
-        // ctx.fillRect(xOffsets[x]+xSeed, yOffsets[y]+ySeed, 2, 2);
+    function getPerkPixel(ctx, x, y, xSeed, ySeed) {        
+        var xToGet = ((xOffsets[x]+xSeed)*imageScaler);
+        var yToGet = (yOffsets[y]+ySeed)*imageScaler
+        pixelData = ctx.getImageData(xToGet, yToGet, 1, 1);
+        
+        if(debug) {
+            ctx.fillStyle = "rgba("+255+","+0+","+0+",.25)";
+            ctx.fillRect(xToGet, yToGet, 1, 1 );
+        }
 
         return {
             red: pixelData.data[0],
@@ -569,7 +576,10 @@
             return item1.dist - item2.dist;
         });
 
-        // console.log(options);
+        if(debug) {
+            console.log(options[0].name);
+            console.log(options);
+        }
 
         return [options[0].name, options.map((x) => x.name).join(',')];    
     }
@@ -624,7 +634,7 @@
             const image = document.getElementById('myimage');
             var imgWidth = image.width;
             var imgHeight = image.height;
-            canvas.width = imgWidth;
+            canvas.width = parseInt(supportedResolutions[imgHeight].width);
             canvas.height = imgHeight;
 
             if(Object.keys(supportedResolutions).includes(imgHeight.toString())) {
