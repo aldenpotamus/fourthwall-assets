@@ -75,6 +75,12 @@
     }
 
     .perk {
+        display: flex;
+        justify-content: flex-end;
+        flex-direction: column;
+        align-items: center;
+        flex-wrap: nowrap;
+
         background-color: rgba(0, 0, 0, 0);
         color: rgb(255, 255, 255);
         text-align: center;
@@ -88,12 +94,43 @@
         margin-right: 10.8px;
         margin-bottom: 3.2px;
         border: 1px solid rgb(255, 255, 255);
-        padding-top: 35px;
     }
 
-    input::-webkit-calendar-picker-indicator {
-        display: none !important;
+    .perk > input {
+        width: 100%;
     }
+
+    .perk > span {
+        padding-bottom: 5px;
+    }
+
+    .perk.edit > span {
+        visibility: unset;
+        display: unset;
+        /* position: unset; */
+    }
+
+    .perk > input {
+        visibility: hidden;
+        display: none;
+        /* position: relative; */
+    }
+
+    .perk.edit > span {
+        visibility: hidden;
+        display: none;
+        /* position: relative; */
+    }
+
+    .perk.edit > input {
+        visibility: unset;
+        display: unset;
+        /* position: unset; */
+    }
+
+    /* input::-webkit-calendar-picker-indicator {
+        display: none !important;
+    } */
 
     .active-critical {
         background-color: rgba(153, 205, 50, 0.2);
@@ -598,55 +635,67 @@
 
             const perkGrid = document.getElementById('perk-grid');
             perkGrid.innerHTML = '';
+            
+            var perkNumber = 0;
             for(var y = 0; y < 5; y++) {
                 for(var x = 0; x < 8; x++) {
                     var result = identifyPerk(ctx, x, y);
                     var perk = result[0];
                     var options = result[1];
 
-                    var cell = document.createElement('input');
-                    cell.id = perk;
-                    cell.value = perk;
-                    cell.setAttribute('options', options);
+                    var cell = document.createElement('div');
+                    cell.id = 'perk-'+(perkNumber);
+                    var cellText = document.createElement('span');
+                    cellText.innerText = perk;
+                    cell.appendChild(cellText);
+
+                    var cellInput = document.createElement('input');
+                    cellInput.id = perk;
+                    cellInput.value = perk;
+                    cellInput.setAttribute('options', options);
                     cell.classList.add('perk');
                     const datalist = document.createElement('datalist');
-                    datalist.id = perk+"-datalist";
-                    cell.setAttribute('list', datalist.id);
+                    datalist.id = 'perk-'+(perkNumber)+"-datalist";
+                    cellInput.setAttribute('list', datalist.id);
                     cell.appendChild(datalist);
-                    cell.getAttribute('options').split(',').forEach(key => {
+                    cellInput.getAttribute('options').split(',').forEach(key => {
                         var option = document.createElement('option');
                         option.value  = key;
                         datalist.appendChild(option);
-                    })
-
-                    cell.addEventListener('click', e => {
-                        e.target.focus();
                     });
 
-                    cell.addEventListener('focus', e => {
-                        e.target.value = '';
+                    cell.addEventListener('click', e => { 
+                        e.target.closest('.perk').classList.add('edit');
+                        e.target.closest('.perk').querySelector('input').value = '';
+                        e.target.closest('.perk').querySelector('input').focus();
                     });
 
-                    cell.addEventListener('blur', e => {
+                    cellInput.addEventListener('blur', e => {
+                        e.target.closest('.perk').classList.remove('edit');
+                        var span = e.target.parentElement.querySelector('span');
                         if(e.target.value == '') {
-                            e.target.value = e.target.id;
+                            span.innerText = e.target.value = e.target.id;
                         } else {
-                            e.target.id = e.target.value;
+                            span.innerText = e.target.id = e.target.value;
                             displayBuildOptions();
                         }
                     });
 
-                    cell.addEventListener('change', e => {
+                    cellInput.addEventListener('change', e => {
+                        e.target.closest('.perk').classList.remove('edit');
                         e.target.blur();
+                        var span = e.target.parentElement.querySelector('span');
                         if(e.target.value == '') {
-                            e.target.value = e.target.id;
+                            span.innerText = e.target.value = e.target.id;
                         } else {
-                            e.target.id = e.target.value;
+                            span.innerText = e.target.id = e.target.value;
                             displayBuildOptions();
                         }
                     });
 
+                    cell.appendChild(cellInput);
                     perkGrid.appendChild(cell);
+                    perkNumber++;
                 } 
             }
 
@@ -680,9 +729,9 @@
                     missingPerkElements.push(nicetohavePerk)
             });
 
-            console.log(foundCriticalPerkElements);
-            console.log(foundNiceToHavePerkElements);
-            console.log(missingPerkElements);
+            // console.log(foundCriticalPerkElements);
+            // console.log(foundNiceToHavePerkElements);
+            // console.log(missingPerkElements);
 
             if(foundCriticalPerkElements.length >= 2) {
                 const buildButtonPH = document.createElement('div');
@@ -737,11 +786,11 @@
 
                 buildButton.addEventListener('mouseover', e => {
                     foundCriticalPerkElements.forEach(element => {
-                        element.classList.add('active-critical');
+                        element.closest('.perk').classList.add('active-critical');
                     })
 
                     foundNiceToHavePerkElements.forEach(element => {
-                        element.classList.add('active-nicetohave');
+                        element.closest('.perk').classList.add('active-nicetohave');
                     })
 
                     if(!selectedElement) {
