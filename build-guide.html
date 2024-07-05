@@ -7,7 +7,6 @@
     }
 
     canvas {
-        /* display: none; */
         width: 1000px;
         height: 564px;
         border: 3px solid rgb(0, 0, 0);
@@ -43,7 +42,6 @@
         width: 33%;
         vertical-align: baseline;
         text-align: center;
-        /* border: 1px solid black; */
         border-right: 1px solid black;
         font-weight: bolder;
     }
@@ -56,7 +54,6 @@
         line-height: normal;
         width: 33%;
         text-decoration: underline;
-        /* text-align: left; */
         font-weight: bolder;
         font-size: 1.25em;
         border-right: 1px solid black;
@@ -69,11 +66,8 @@
     #perk-grid {
         display: flex;
         flex-wrap: wrap;
-        /* border: 1px, white; */
         color: white;
         position: absolute;
-        /* top: 255px;
-        left: 448px; */
         top: calc(var(--canvasOffsetTop) * 1px);
         left: calc(var(--canvasOffsetLeft) * 1px);
         width: 439px;
@@ -81,7 +75,8 @@
     }
 
     .perk {
-        line-height: normal;
+        background-color: rgba(0, 0, 0, 0);
+        color: rgb(255, 255, 255);
         text-align: center;
         overflow: hidden;
         border-top-left-radius: 21px;
@@ -93,8 +88,11 @@
         margin-right: 10.8px;
         margin-bottom: 3.2px;
         border: 1px solid rgb(255, 255, 255);
-        border-style: solid;
-        align-content: flex-end;
+        padding-top: 35px;
+    }
+
+    input::-webkit-calendar-picker-indicator {
+        display: none !important;
     }
 
     .active-critical {
@@ -202,8 +200,7 @@
         -o-transition: all 0.5s ease-in-out;
         transition: all 0.5s ease-in-out;
         position:absolute;
-        transform: translate(calc((var(--destX) - (var(--startX))) * 1px), calc((var(--destY) - (var(--startY))) * 1px)) scale(var(--scale)); 
-        /* box-shadow: 25px 25px 25px 1px rgb(0 0 0 / 20%); */
+        transform: translate(calc((var(--destX) - (var(--startX))) * 1px), calc((var(--destY) - (var(--startY))) * 1px)) scale(var(--scale));
         z-index: 2;
     }
 
@@ -237,7 +234,6 @@
     }
 
     .selected > img {
-        /* box-shadow: 25px 25px 25px 1px rgb(0 0 0 / 20%); */
         filter: drop-shadow(0px 0px 25px #1aff00);
     }
 
@@ -334,57 +330,9 @@
     .not-selected .watch-button {
         transition: all 0.5s ease-in-out;
     }
-
-    /* Modal */
-    .modal {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
-        padding-top: 30vh; /* Location of the box */
-        left: 0;
-        top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    }
-
-    /* Modal Content */
-    .modal-content {
-        background-color: #cdcdcd;
-        margin: auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 20%;
-    }
-
-    /* The Close Button */
-    .close {
-        position: relative;
-        top: -76px;
-        color: #aaaaaa;
-        float: right;
-        font-size: 106px;
-        font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-        color: #000;
-        text-decoration: none;
-        cursor: pointer;
-    }
 </style>
 <body>
     <div id="main">
-        <div id="fix-perk-modal" class="modal">
-            <div class="modal-content">
-                <h3 style="color: black; margin-top: 0px; font-size: 1.1rem;" >Choose correct perk:</h3>
-                <span id="modal-dismiss" class="close">&times;</span>
-                <div class="modal-selector"></div>
-            </div>
-        </div>
         <h1>BUILD GUIDE</h1>
         <div id="missing-perks"></div>
         <div><a href="/pages/build-guide-all">Browse Build Guides Here</a></div>
@@ -440,10 +388,6 @@
         }
     }
 
-    document.getElementById('modal-dismiss').addEventListener('click', e => {
-        document.getElementById('fix-perk-modal').style.display = "none";
-    });
-
     function buildTable(crit, nice, missing) {
         const table = document.createElement('table');
         const headerRow = document.createElement('tr');
@@ -458,14 +402,14 @@
         const critDataCell = document.createElement('td');
         critDataCell.innerHTML = '';
         crit.forEach(element => {
-            critDataCell.innerHTML += element.innerHTML + '<br>';
+            critDataCell.innerHTML += element.value + '<br>';
         });
         dataRow.appendChild(critDataCell);
 
         const niceDataCell = document.createElement('td');
         niceDataCell.innerHTML = '';
         nice.forEach(element => {
-            niceDataCell.innerHTML += element.innerHTML + '<br>';
+            niceDataCell.innerHTML += element.value + '<br>';
         });
         dataRow.appendChild(niceDataCell);
 
@@ -533,7 +477,7 @@
         pixelData = ctx.getImageData(xToGet, yToGet, 1, 1);
         
         if(debug) {
-            ctx.fillStyle = "rgba("+255+","+0+","+0+",.25)";
+            ctx.fillStyle = "rgba("+0+","+0+","+255+",.45)";
             ctx.fillRect(xToGet, yToGet, 1, 1 );
         }
 
@@ -655,45 +599,54 @@
             const perkGrid = document.getElementById('perk-grid');
             perkGrid.innerHTML = '';
             for(var y = 0; y < 5; y++) {
-                // var row = document.createElement('div');
-                // perkGrid.appendChild(row);
                 for(var x = 0; x < 8; x++) {
                     var result = identifyPerk(ctx, x, y);
                     var perk = result[0];
                     var options = result[1];
 
-                    var cell = document.createElement('div');
+                    var cell = document.createElement('input');
                     cell.id = perk;
-                    cell.innerHTML = perk;
+                    cell.value = perk;
                     cell.setAttribute('options', options);
                     cell.classList.add('perk');
-                    perkGrid.appendChild(cell);
-                    cell.addEventListener('click', e => {
-                        document.getElementById('fix-perk-modal').style.display = "block";
-                        const modalContent = document.getElementById('fix-perk-modal').querySelector(".modal-selector");
-                        modalContent.innerHTML = '';
-                        const datalist = document.createElement('datalist');
-                        datalist.id = "modal-datalist";
-                        e.target.getAttribute('options').split(',').forEach(key => {
-                            var option = document.createElement('option');
-                            option.value  = key;
-                            datalist.appendChild(option);
-                        })
-                        const input = document.createElement('input');
-                        input.setAttribute('list', 'modal-datalist');
-                        input.setAttribute('to-change', e.target.id);
-                        input.addEventListener('change', event => {
-                            var updateTarget = document.getElementById(event.target.getAttribute('to-change'));
-                            updateTarget.id = event.target.value;
-                            updateTarget.innerHTML = event.target.value;
-                            document.getElementById('fix-perk-modal').style.display = "none";
-                            displayBuildOptions();
-                        });
+                    const datalist = document.createElement('datalist');
+                    datalist.id = perk+"-datalist";
+                    cell.setAttribute('list', datalist.id);
+                    cell.appendChild(datalist);
+                    cell.getAttribute('options').split(',').forEach(key => {
+                        var option = document.createElement('option');
+                        option.value  = key;
+                        datalist.appendChild(option);
+                    })
 
-                        modalContent.appendChild(input);
-                        modalContent.appendChild(datalist);
-                        input.focus();
+                    cell.addEventListener('click', e => {
+                        e.target.focus();
                     });
+
+                    cell.addEventListener('focus', e => {
+                        e.target.value = '';
+                    });
+
+                    cell.addEventListener('blur', e => {
+                        if(e.target.value == '') {
+                            e.target.value = e.target.id;
+                        } else {
+                            e.target.id = e.target.value;
+                            displayBuildOptions();
+                        }
+                    });
+
+                    cell.addEventListener('change', e => {
+                        e.target.blur();
+                        if(e.target.value == '') {
+                            e.target.value = e.target.id;
+                        } else {
+                            e.target.id = e.target.value;
+                            displayBuildOptions();
+                        }
+                    });
+
+                    perkGrid.appendChild(cell);
                 } 
             }
 
@@ -727,9 +680,9 @@
                     missingPerkElements.push(nicetohavePerk)
             });
 
-            // console.log(foundCriticalPerkElements);
-            // console.log(foundNiceToHavePerkElements);
-            // console.log(missingPerkElements);
+            console.log(foundCriticalPerkElements);
+            console.log(foundNiceToHavePerkElements);
+            console.log(missingPerkElements);
 
             if(foundCriticalPerkElements.length >= 2) {
                 const buildButtonPH = document.createElement('div');
