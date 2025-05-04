@@ -44,7 +44,7 @@
         "abbr": "bm",
         "rating": 0.70,
         "vlink": "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=1909",
-        "critical": ["Organic Armor", "Blood Magic", "Body Builder"],
+        "critical": ["Organic Armor", "Blood Magic", "Bodybuilder"],
         "nicetohave": ["Sanguine Fuel", "Vampire", "Coagulation"]
     },
     "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/hedgehog.png" : {
@@ -148,7 +148,7 @@
         "abbr": "stout",
         "rating": 0.45,
         "vlink": "https://youtu.be/5WEMg4NTD9Y?si=Wtz06miPQtH1LrTl&t=4690",
-        "critical": ["Body Builder", "Organic Armor", "Vampire"],
+        "critical": ["Bodybuilder", "Organic Armor", "Vampire"],
         "nicetohave": ["Heart of the Party", "Initiator", "Overload"]
     },
     "https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/assets/tls/builds/stunner.png" : {
