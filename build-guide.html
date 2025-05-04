@@ -396,10 +396,10 @@
     // fetch('./build_guide/build-seed-pixels.json').then((response) => response.json()).then((json) => { seedPixels = json; });
     // fetch('./build_guide/perk-locations.json').then((response) => response.json()).then((json) => { perkLocations = json; });
 
-    fetch('https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/build_guide/build-defs.json').then((response) => response.json()).then((json) => { builds = json; });
-    fetch('https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/build_guide/build-dna.json').then((response) => response.json()).then((json) => { perks_dna = json; });
-    fetch('https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/build_guide/build-seed-pixels.json').then((response) => response.json()).then((json) => { seedPixels = json; });
-    fetch('https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/build_guide/perk-locations.json').then((response) => response.json()).then((json) => { perkLocations = json; });
+    fetch('https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/build_guide/build-defs.json', {cache: "no-store"}).then((response) => response.json()).then((json) => { builds = json; });
+    fetch('https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/build_guide/build-dna.json', {cache: "no-store"}).then((response) => response.json()).then((json) => { perks_dna = json; });
+    fetch('https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/build_guide/build-seed-pixels.json', {cache: "no-store"}).then((response) => response.json()).then((json) => { seedPixels = json; });
+    fetch('https://raw.githubusercontent.com/aldenpotamus/fourthwall-assets/main/build_guide/perk-locations.json', {cache: "no-store"}).then((response) => response.json()).then((json) => { perkLocations = json; });
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -547,7 +547,6 @@
         if(strict) {
             var newFinalOptions = [];
             options.forEach(option => {
-                console.log(option.name);
                 if(perkLocations[option.name].includes(x+","+y))
                     newFinalOptions.push(option)
             });
