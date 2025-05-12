@@ -615,7 +615,7 @@
             const image = document.getElementById('myimage');
             var imgWidth = image.width;
             var imgHeight = image.height;
-            canvas.width = parseInt(supportedResolutions[imgHeight].width);
+            canvas.width = parseInt(supportedResolutions[imgHeight] ? supportedResolutions[imgHeight].width : image.widt);
             canvas.height = imgHeight;
 
             if(Object.keys(supportedResolutions).includes(imgHeight.toString())) {
